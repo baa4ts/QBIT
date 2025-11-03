@@ -1,11 +1,11 @@
-import type { JSX } from 'react'
-import { Navigate, Outlet } from 'react-router'
-import { useUsuario } from '../../store/usuarioStore'
+import type { JSX } from 'react';
+import { Navigate, Outlet } from 'react-router';
+import { useUsuario } from '../../store/usuarioStore';
 
 export interface PrivadaProps {
-  permiso: number
-  re_perm?: string
-  re_desa?: string
+  permiso: number;
+  re_perm?: string;
+  re_desa?: string;
 }
 
 /**
@@ -19,12 +19,12 @@ export interface PrivadaProps {
  * @param re_desa string → ruta para redireccionar si no hay usuario (opcional, default = '/usuario/login')
  */
 const Privada = ({ permiso, re_desa = '/usuario/login', re_perm = '/usuario' }: PrivadaProps): JSX.Element => {
-  const {usuario} = useUsuario()
+  const { usuario } = useUsuario();
 
-  if (!usuario) return <Navigate to={re_desa} replace />
-  if (usuario.permiso !== permiso) return <Navigate to={re_perm} />
+  if (!usuario) return <Navigate to={re_desa} replace />;
+  if (usuario.permiso !== permiso) return <Navigate to={re_perm} />;
 
-  return <Outlet />
-}
+  return <Outlet />;
+};
 
-export default Privada
+export default Privada;

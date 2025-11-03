@@ -2,18 +2,20 @@
   "printWidth": 160,
   "singleQuote": true,
   "jsxSingleQuote": true,
-  "semi": false,
+  "semi": true,
   "tabWidth": 2,
   "useTabs": false,
   "arrowParens": "avoid",
   "bracketSpacing": true,
   "endOfLine": "lf",
-  "trailingComma": "es5",
+  "trailingComma": "all",
   "proseWrap": "never",
   "htmlWhitespaceSensitivity": "ignore",
+  "bracketSameLine": true,
   "plugins": [
     "@trivago/prettier-plugin-sort-imports",
-    "prettier-plugin-organize-imports"
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-tailwindcss"
   ],
   "importOrder": [
     "^react$",

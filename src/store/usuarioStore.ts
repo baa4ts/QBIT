@@ -1,21 +1,21 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
 // Tipos
 export interface Usuario {
-  id: string
-  permiso: number
-  username: string
-  email: string
-  token: string
+  id: string;
+  permiso: number;
+  username: string;
+  email: string;
+  token: string;
 }
 
 interface UsuarioState {
   // Datos
-  usuario: Usuario | null
+  usuario: Usuario | null;
 
   // Acciones
-  guardarUsuario: (usuario: Usuario) => void
-  eliminarUsuario: () => void
+  guardarUsuario: (usuario: Usuario) => void;
+  eliminarUsuario: () => void;
 }
 
 /**
@@ -29,4 +29,4 @@ export const useUsuario = create<UsuarioState>(set => ({
   // Acciones
   guardarUsuario: usuario => set({ usuario }),
   eliminarUsuario: () => set({ usuario: null }),
-}))
+}));
