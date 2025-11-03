@@ -15,11 +15,11 @@ export interface PrivadaProps {
  * @note Obligatorio estar autenticado para acceder
  *
  * @param permiso number → nivel de permiso requerido
- * @param re_perm string → ruta si no tiene permiso (opcional, default '/usuario')
- * @param re_desa string → ruta si no hay usuario (opcional, default '/usuario/login')
+ * @param re_perm string → ruta para redireccionar si no tiene permiso (opcional, default = '/usuario')
+ * @param re_desa string → ruta para redireccionar si no hay usuario (opcional, default = '/usuario/login')
  */
 const Privada = ({ permiso, re_desa = '/usuario/login', re_perm = '/usuario' }: PrivadaProps): JSX.Element => {
-  const usuario = useUsuario()
+  const {usuario} = useUsuario()
 
   if (!usuario) return <Navigate to={re_desa} replace />
   if (usuario.permiso !== permiso) return <Navigate to={re_perm} />

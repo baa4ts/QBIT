@@ -1,4 +1,4 @@
-import { Store, useStore } from '@tanstack/react-store'
+import { create } from 'zustand'
 
 // Tipos
 export interface Usuario {
@@ -9,31 +9,24 @@ export interface Usuario {
   token: string
 }
 
-export interface UsuarioState {
+interface UsuarioState {
+  // Datos
   usuario: Usuario | null
-}
 
-// Store del usuario
-export const usuarioStore = new Store<UsuarioState>({ usuario: null })
-
-/**
- * Guarda un usuario en la store
- */
-export function setUsuario(usuario: Usuario) {
-  usuarioStore.setState({ usuario })
+  // Acciones
+  guardarUsuario: (usuario: Usuario) => void
+  eliminarUsuario: () => void
 }
 
 /**
- * Elimina el usuario de la store
+ * Store de usuario global
+ * @note Contiene estado del usuario y acciones para actualizarlo
  */
-export function clearUsuario() {
-  usuarioStore.setState({ usuario: null })
-}
+export const useUsuario = create<UsuarioState>(set => ({
+  // Datos
+  usuario: null,
 
-/**
- * Hook reactivo para leer el usuario actual
- */
-export function useUsuario() {
-  const state = useStore(usuarioStore)
-  return state.usuario
-}
+  // Acciones
+  guardarUsuario: usuario => set({ usuario }),
+  eliminarUsuario: () => set({ usuario: null }),
+}))
