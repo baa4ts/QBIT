@@ -24,7 +24,7 @@ interface UsuarioState {
  */
 export const useUsuario = create<UsuarioState>(set => ({
   // Datos
-  usuario: null,
+  usuario: { id: '1', username: '', token: ' ', permiso: 1, email: '' },
 
   // Acciones
   guardarUsuario: usuario => set({ usuario }),
