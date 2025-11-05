@@ -4,8 +4,7 @@ import { create } from 'zustand';
 export interface Usuario {
   id: string;
   permiso: number;
-  username: string;
-  email: string;
+  icono: string;
   token: string;
 }
 
@@ -24,7 +23,7 @@ interface UsuarioState {
  */
 export const useUsuario = create<UsuarioState>(set => ({
   // Datos
-  usuario: { id: '1', username: '', token: ' ', permiso: 1, email: '' },
+  usuario: null,
 
   // Acciones
   guardarUsuario: usuario => set({ usuario }),

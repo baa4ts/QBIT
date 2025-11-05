@@ -5,6 +5,7 @@ import Privada from './components/Router/Privada';
 import Layout from './components/Shared/Layout';
 import SuspenseLoading from './components/Shared/SuspenseLoading';
 import Home from './pages/Home';
+import Biblioteca from './pages/Juegos/Biblioteca';
 import Perfil from './pages/Usuarios/Perfil';
 
 // Paginas que se cargaran lento
@@ -53,6 +54,13 @@ const AppRouter = () => {
             {/* ---- */}
           </Route>
 
+          {/* Rutas para juegos */}
+          <Route path='juegos'>
+            {/* Ruta privada para biblioteca */}
+            <Route element={<Privada permiso={1} />}>
+              <Route path='biblioteca' element={<Biblioteca />} />
+            </Route>
+          </Route>
           {/* ---- */}
         </Route>
       </Routes>

@@ -1,13 +1,15 @@
+import { memo } from 'react';
+
 interface Props {
   titulo: string;
 }
 
-const UsuarioSeparador = ({ titulo = '' }: Props) => {
+const UsuarioSeparador = memo(({ titulo = '' }: Props) => {
   return (
-    <section className='m-5 flex h-9 w-auto flex-row items-center bg-[#0A0909] font-mono text-white md:text-xl'>
+    <section className='flex h-9 w-auto flex-row items-center rounded-md bg-[#0A0909] font-mono text-white md:m-2 md:text-xl'>
       <p className='ml-2'>{titulo}</p>
     </section>
   );
-};
+});
 
 export default UsuarioSeparador;

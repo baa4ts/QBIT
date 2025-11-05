@@ -17,6 +17,7 @@
     "@tanstack/react-form": "^1.23.8",
     "@tanstack/react-form-devtools": "^0.1.8",
     "lucide-react": "^0.552.0",
+    "radix-ui": "^1.4.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router": "^7.9.5",
