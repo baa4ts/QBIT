@@ -1,19 +1,19 @@
 import { create } from 'zustand';
 
 // Tipos
-export interface Usuario {
+export interface UsuarioInter {
   id: string;
   permiso: number;
   icono: string;
   token: string;
 }
 
-interface UsuarioState {
+export interface UsuarioState {
   // Datos
-  usuario: Usuario | null;
+  usuario: UsuarioInter | null;
 
   // Acciones
-  guardarUsuario: (usuario: Usuario) => void;
+  guardarUsuario: (usuario: UsuarioInter) => void;
   eliminarUsuario: () => void;
 }
 
