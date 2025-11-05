@@ -1,16 +1,17 @@
 import * as React from 'react';
 
-const PUNTO_DE_QUIEBRE_MOVIL = 768;
+export interface Props {
+  width: number;
+}
 
-export function useEsMovil() {
-  // FIX: Se especifica el tipo 'boolean | undefined' para aceptar el valor booleano en setEsMovil.
+export function useEsMovil({ width }: Props) {
   const [esMovil, setEsMovil] = React.useState<boolean | undefined>(undefined);
 
   React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${PUNTO_DE_QUIEBRE_MOVIL - 1}px)`);
+    const mql = window.matchMedia(`(max-width: ${width - 1}px)`);
 
     const manejarCambio = () => {
-      setEsMovil(window.innerWidth < PUNTO_DE_QUIEBRE_MOVIL);
+      setEsMovil(window.innerWidth < width);
     };
 
     mql.addEventListener('change', manejarCambio);
