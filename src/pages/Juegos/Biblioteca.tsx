@@ -7,6 +7,7 @@ import Paginador from '../../components/Shared/Paginador';
 import SelectorCategorias from '../../components/Shared/SelectorCategorias';
 import UltimasCompras from '../../components/Usuario/UltimasCompras';
 import UsuarioSeparador from '../../components/Usuario/UsuarioSeparador';
+import { categoriasPruevas, juegosPruevas } from '../../interfaces/Juegos/Juegos.interface';
 import { GenararUrl } from '../../Utils/GerarUrl';
 
 const Biblioteca = () => {
@@ -35,40 +36,14 @@ const Biblioteca = () => {
     navegar({ pathname: '/juegos/biblioteca', search }, { replace: true });
   }, [pagina, categorias, buscar]);
 
-  // Datos de prueba
-  const juegos = [
-    {
-      nombre: 'Hades II',
-      imagen: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg',
-      categorias: ['Roguelike', 'Accion'],
-      precio: 22.99,
-      slug: 'hades-2',
-    },
-    {
-      nombre: 'Satisfactory',
-      imagen: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/526870/header.jpg',
-      categorias: ['Construccion', 'Exploracion'],
-      precio: 29.99,
-      slug: 'satisfactory',
-    },
-    {
-      nombre: 'Palworld',
-      imagen: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1623730/header.jpg',
-      categorias: ['Supervivencia', 'Multijugador'],
-      precio: 26.5,
-      slug: 'palworld',
-    },
-  ];
-  const todas = ['Accion', 'Aventura', 'Roguelike', 'Estrategia', 'Simulacion', 'Terror', 'Construccion', 'Deportes', 'Multijugador', 'Supervivencia'];
-
   return (
     <ContenedorAuto>
       {/* Se reutiliza la mayoria de cosas*/}
       <Navbar />
       <MenuJuego mostrarOfertas={false} buscarJuego={buscar} setBuscarJuego={setBuscar} />
-      <SelectorCategorias todas={todas} categorias={categorias} setCategorias={setCategorias} />
+      <SelectorCategorias todas={categoriasPruevas} categorias={categorias} setCategorias={setCategorias} />
       <UsuarioSeparador titulo='Tus juegos' />
-      <UltimasCompras mostrarPrecio={true} ultimosJuegos={juegos} />
+      <UltimasCompras mostrarPrecio={true} ultimosJuegos={juegosPruevas} />
       <Paginador pagina={pagina} setPagina={setPagina} max={1} />
     </ContenedorAuto>
   );

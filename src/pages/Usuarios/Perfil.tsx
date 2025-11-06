@@ -5,9 +5,10 @@ import UsuarioCard from '../../components/Usuario/UsuarioCard';
 import UsuarioEstadisticas from '../../components/Usuario/UsuarioEstadisticas';
 import UsuarioMenu from '../../components/Usuario/UsuarioMenu';
 import UsuarioSeparador from '../../components/Usuario/UsuarioSeparador';
+import type { UsuarioInterface } from '../../interfaces/Usuario/Perfil.interface';
 
 const Perfil = () => {
-  const usuario = {
+  const usuario: UsuarioInterface = {
     id: 1,
     imagenUrl: 'https://i.pinimg.com/736x/cd/35/56/cd3556de028e954d49503939ca861cfc.jpg',
     nombre: 'Hideo Kojima',

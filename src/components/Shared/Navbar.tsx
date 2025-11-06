@@ -1,4 +1,4 @@
-import { ShoppingCart, User } from 'lucide-react';
+import { Gamepad2, ShoppingCart, User } from 'lucide-react';
 import { memo } from 'react';
 import { Link } from 'react-router';
 import { useEsMovil } from '../../hooks/useEsMovile';
@@ -11,17 +11,24 @@ const BarraOpciones = memo(({ movil, usuario }: { movil: boolean; usuario: any }
         Qbit
       </Link>
 
-      {/* Biblioteca solo si hay usuario */}
-      {!!usuario && (
-        <Link to='/juegos/biblioteca' className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
-          Biblioteca
-        </Link>
-      )}
-
       {/* Ofertas solo en PC */}
       {!movil && (
         <Link to={{ pathname: '/juegos', search: '?ofertas=true' }} className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
           Ofertas
+        </Link>
+      )}
+
+      {/* Biblioteca solo si hay usuario */}
+      {!!usuario && (
+        <Link to='/juegos/biblioteca' className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
+          <Gamepad2 />
+        </Link>
+      )}
+
+      {/* Biblioteca solo si hay usuario */}
+      {!!usuario && (
+        <Link to='/usuario/carrito' className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
+          <ShoppingCart />
         </Link>
       )}
     </div>
@@ -44,16 +51,6 @@ const IconoUsuario = memo(({ usuario }: { usuario: any }) => {
   );
 });
 
-const IconoCarrito = memo(() => {
-  return (
-    <div className='flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white shadow-md backdrop-blur-md hover:bg-white/40'>
-      <Link to='/carrito'>
-        <ShoppingCart size={28} className='h-full w-full' />
-      </Link>
-    </div>
-  );
-});
-
 const Navbar = () => {
   const { usuario } = useUsuario();
   const movil = useEsMovil({ width: 800 });
@@ -65,7 +62,6 @@ const Navbar = () => {
 
       {/* Iconos flotantes */}
       <div className='flex gap-3'>
-        <IconoCarrito />
         <IconoUsuario usuario={usuario} />
       </div>
     </nav>
