@@ -6,6 +6,8 @@ import Layout from './components/Shared/Layout';
 import SuspenseLoading from './components/Shared/SuspenseLoading';
 import Home from './pages/Home';
 import Biblioteca from './pages/Juegos/Biblioteca';
+import Juego from './pages/Juegos/Juego';
+import Juegos from './pages/Juegos/Juegos';
 import Perfil from './pages/Usuarios/Perfil';
 
 // Paginas que se cargaran lento
@@ -56,6 +58,12 @@ const AppRouter = () => {
 
           {/* Rutas para juegos */}
           <Route path='juegos'>
+            {/* Ruta principal lista listar, buscar juegos disponibles */}
+            <Route index element={<Juegos />} />
+
+            {/* Ruta para ver un juego espesifico */}
+            <Route path=':slug' element={<Juego />} />
+
             {/* Ruta privada para biblioteca */}
             <Route element={<Privada permiso={1} />}>
               <Route path='biblioteca' element={<Biblioteca />} />

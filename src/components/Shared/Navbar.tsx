@@ -13,13 +13,13 @@ const BarraOpciones = memo(({ movil, usuario }: { movil: boolean; usuario: any }
 
       {/* Biblioteca solo si NO hay usuario */}
       {!!usuario && (
-        <Link to='/otra' className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
+        <Link to='/juegos/biblioteca' className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
           Biblioteca
         </Link>
       )}
 
       {!movil && (
-        <Link to='/otra' className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
+        <Link to={{ pathname: '/juegos', search: '?ofertas=true' }} className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
           Ofertas
         </Link>
       )}
@@ -29,7 +29,7 @@ const BarraOpciones = memo(({ movil, usuario }: { movil: boolean; usuario: any }
 
 const IconoUsuario = memo(({ usuario }: { usuario: any }) => {
   return (
-    <div className='flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white shadow-md backdrop-blur-md hover:bg-white/40'>
+    <div className='flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white/20 text-white shadow-md backdrop-blur-md hover:bg-white/40'>
       {/* Login si NO hay usuario */}
       {!usuario && (
         <Link to={'/usuario/login'}>
@@ -40,7 +40,7 @@ const IconoUsuario = memo(({ usuario }: { usuario: any }) => {
       {/* Icono si hay usuario */}
       {usuario && (
         <Link to={'/usuario'}>
-          <img className='h-full w-full rounded-full object-cover' src={usuario.icono} />
+          <img className='h-full w-full rounded-none object-cover' src={usuario.icono} />
         </Link>
       )}
     </div>
