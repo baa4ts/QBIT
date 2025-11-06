@@ -42,6 +42,7 @@ const Juegos = () => {
   // Actualizar la url
   useEffect(() => {
     const search = GenararUrl({ pagina, ofertas, categorias, buscar });
+    console.log(ofertas);
     navegar({ pathname: '/juegos', search }, { replace: true });
   }, [pagina, ofertas, categorias, buscar]);
 
