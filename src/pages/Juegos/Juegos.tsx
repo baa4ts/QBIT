@@ -50,8 +50,11 @@ const Juegos = () => {
     <ContenedorAuto>
       {/* Se reutiliza el contendor y listado de usuario */}
       <Navbar />
+      {/* Menu de buscar */}
       <MenuJuego label='Ofertas' mostrarOfertas activo={ofertas} setActivo={setOfertas} buscarJuego={buscar} setBuscarJuego={setBuscar} />
+      {/* Menu de categorias */}
       <SelectorCategorias todas={categoriasPruevas} categorias={categorias} setCategorias={setCategorias} />
+      {/* Listado de juegos */}
       <UltimasCompras mostrarPrecio={true} ultimosJuegos={juegosPruevas} />
       <Paginador pagina={pagina} setPagina={setPagina} max={10} />
     </ContenedorAuto>
