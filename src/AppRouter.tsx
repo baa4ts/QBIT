@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Biblioteca from './pages/Juegos/Biblioteca';
 import Juego from './pages/Juegos/Juego';
 import Juegos from './pages/Juegos/Juegos';
+import Carrito from './pages/Usuarios/Carrito';
 import Perfil from './pages/Usuarios/Perfil';
 
 // Paginas que se cargaran lento
@@ -28,6 +29,7 @@ const AppRouter = () => {
             {/* Por defecto el perfil del usuario si ya esta logeado (Ruta privada) */}
             <Route element={<Privada permiso={1} />}>
               <Route index element={<Perfil />} />
+              <Route path='carrito' element={<Carrito />} />
             </Route>
 
             {/* Rutas para la autenticacion del usuario */}
