@@ -1,4 +1,4 @@
-import { User } from 'lucide-react';
+import { ShoppingCart, User } from 'lucide-react';
 import { memo } from 'react';
 import { Link } from 'react-router';
 import { useEsMovil } from '../../hooks/useEsMovile';
@@ -11,13 +11,14 @@ const BarraOpciones = memo(({ movil, usuario }: { movil: boolean; usuario: any }
         Qbit
       </Link>
 
-      {/* Biblioteca solo si NO hay usuario */}
+      {/* Biblioteca solo si hay usuario */}
       {!!usuario && (
         <Link to='/juegos/biblioteca' className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
           Biblioteca
         </Link>
       )}
 
+      {/* Ofertas solo en PC */}
       {!movil && (
         <Link to={{ pathname: '/juegos', search: '?ofertas=true' }} className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
           Ofertas
@@ -30,19 +31,25 @@ const BarraOpciones = memo(({ movil, usuario }: { movil: boolean; usuario: any }
 const IconoUsuario = memo(({ usuario }: { usuario: any }) => {
   return (
     <div className='flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-white/20 text-white shadow-md backdrop-blur-md hover:bg-white/40'>
-      {/* Login si NO hay usuario */}
-      {!usuario && (
-        <Link to={'/usuario/login'}>
+      {!usuario ? (
+        <Link to='/usuario/login'>
           <User size={28} className='h-full w-full rounded-md' />
         </Link>
-      )}
-
-      {/* Icono si hay usuario */}
-      {usuario && (
-        <Link to={'/usuario'}>
+      ) : (
+        <Link to='/usuario'>
           <img className='h-full w-full rounded-none object-cover' src={usuario.icono} />
         </Link>
       )}
+    </div>
+  );
+});
+
+const IconoCarrito = memo(() => {
+  return (
+    <div className='flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white shadow-md backdrop-blur-md hover:bg-white/40'>
+      <Link to='/carrito'>
+        <ShoppingCart size={28} className='h-full w-full' />
+      </Link>
     </div>
   );
 });
@@ -53,11 +60,14 @@ const Navbar = () => {
 
   return (
     <nav className='fixed top-0 left-1/2 z-50 mx-auto flex w-auto max-w-[500px] -translate-x-1/2 items-center justify-between gap-5 p-4'>
-      {/* Barra de bottones */}
+      {/* Barra de botones */}
       <BarraOpciones movil={movil} usuario={usuario} />
 
-      {/* Icono de usuario */}
-      <IconoUsuario usuario={usuario} />
+      {/* Iconos flotantes */}
+      <div className='flex gap-3'>
+        <IconoCarrito />
+        <IconoUsuario usuario={usuario} />
+      </div>
     </nav>
   );
 };

@@ -1,5 +1,12 @@
+import Navbar from '../../components/Shared/Navbar';
+
 const Juego = () => {
-  return <div>Juego</div>;
+  return (
+    <>
+      <Navbar />
+      <div>Hola</div>
+    </>
+  );
 };
 
 export default Juego;

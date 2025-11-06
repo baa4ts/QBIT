@@ -7,12 +7,12 @@ export interface CardJuegoProps {
   categorias: string[];
   precio?: number;
   mostrarPrecio?: boolean;
-  slugJuego: string;
+  slug: string;
 }
 
-const CardJuego = memo(({ nombre, imagen, categorias, precio, mostrarPrecio = false, slugJuego }: CardJuegoProps) => {
+const CardJuego = memo(({ nombre, imagen, categorias, precio, mostrarPrecio = false, slug }: CardJuegoProps) => {
   return (
-    <Link to={slugJuego} className='flex flex-row gap-3 rounded-md bg-[#354553] p-2 transition-all duration-200 hover:scale-[1.01] hover:bg-[#3f5161]'>
+    <Link to={`/juegos/${slug}`} className='flex flex-row gap-3 rounded-md bg-[#354553] p-2 transition-all duration-200 hover:scale-[1.01] hover:bg-[#3f5161]'>
       <div className='w-1/3 md:w-1/2'>
         <img className='h-full w-full rounded-sm object-cover' src={imagen} alt={nombre} />
       </div>
