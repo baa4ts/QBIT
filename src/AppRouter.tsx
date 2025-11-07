@@ -4,6 +4,7 @@ import AntiUsuarios from './components/Router/AntiUsuarios';
 import Privada from './components/Router/Privada';
 import Layout from './components/Shared/Layout';
 import SuspenseLoading from './components/Shared/SuspenseLoading';
+import Publicar from './pages/Devs/Publicar';
 import Home from './pages/Home';
 import Biblioteca from './pages/Juegos/Biblioteca';
 import Juego from './pages/Juegos/Juego';
@@ -27,7 +28,7 @@ const AppRouter = () => {
 
           <Route path='usuario'>
             {/* Por defecto el perfil del usuario si ya esta logeado (Ruta privada) */}
-            <Route element={<Privada permiso={1} bloquear_permisos={[2]} />}>
+            <Route element={<Privada permiso={1} />}>
               <Route index element={<Perfil />} />
 
               {/* Carrito bloqueado para developers */}
@@ -69,7 +70,7 @@ const AppRouter = () => {
             <Route path=':slug' element={<Juego />} />
 
             {/* Ruta privada para biblioteca */}
-            <Route element={<Privada permiso={1} bloquear_permisos={[2]} />}>
+            <Route element={<Privada permiso={1} />}>
               <Route path='biblioteca' element={<Biblioteca />} />
             </Route>
           </Route>
@@ -78,9 +79,9 @@ const AppRouter = () => {
           {/* Rutas para ver perfiles */}
           {/* /////////////////////// */}
 
-          {/* Ruta para dev */}
-          <Route path='dev' element={<Privada permiso={2} bloquear_permisos={[1]} re_perm='/' />}>
-            <Route index element={<h1>1</h1>} />
+          {/* Ruta para publicar */}
+          <Route path='dev' element={<Privada permiso={2} re_perm='/' />}>
+            <Route index element={<Publicar />} />
           </Route>
 
           <Route path='*' element={<Navigate to={'/'} />} />
