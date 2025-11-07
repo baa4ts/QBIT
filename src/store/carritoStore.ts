@@ -8,23 +8,21 @@ export interface JuegoCarrito {
 }
 
 export interface CarritoStore {
-  // State
   juegos: JuegoCarrito[];
 
-  // Acciones
   agregar: (juego: JuegoCarrito) => boolean;
   eliminar: (id: number) => boolean;
   limpiar: () => boolean;
+  existe: (id: number) => boolean;
 }
 
 export const useCarrito = create<CarritoStore>((set, get) => ({
-  // State
   juegos: [],
 
-  // Acciones
   agregar: (juego: JuegoCarrito) => {
     try {
       const { juegos } = get();
+      if (juegos.some(j => j.id === juego.id)) return false;
       set({ juegos: [...juegos, juego] });
       return true;
     } catch {
@@ -35,8 +33,7 @@ export const useCarrito = create<CarritoStore>((set, get) => ({
   eliminar: (id: number) => {
     try {
       const { juegos } = get();
-      const nuevaLista = juegos.filter(a => a.id !== id);
-      set({ juegos: nuevaLista });
+      set({ juegos: juegos.filter(j => j.id !== id) });
       return true;
     } catch {
       return false;
@@ -50,5 +47,10 @@ export const useCarrito = create<CarritoStore>((set, get) => ({
     } catch {
       return false;
     }
+  },
+
+  existe: (id: number) => {
+    const { juegos } = get();
+    return juegos.some(j => j.id === id);
   },
 }));

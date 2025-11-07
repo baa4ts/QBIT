@@ -23,7 +23,12 @@ export interface UsuarioState {
  */
 export const useUsuario = create<UsuarioState>(set => ({
   // Datos
-  usuario: { id: '1', icono: 'https://i.pinimg.com/736x/2d/85/dd/2d85dd0cd66653ffd336afed2ba551ca.jpg', permiso: 1, token: '' },
+  usuario: {
+    icono: 'https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500',
+    id: '1',
+    permiso: 2,
+    token: '',
+  },
 
   // Acciones
   guardarUsuario: usuario => set({ usuario }),

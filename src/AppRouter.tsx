@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import AntiUsuarios from './components/Router/AntiUsuarios';
 import Privada from './components/Router/Privada';
 import Layout from './components/Shared/Layout';
@@ -27,8 +27,10 @@ const AppRouter = () => {
 
           <Route path='usuario'>
             {/* Por defecto el perfil del usuario si ya esta logeado (Ruta privada) */}
-            <Route element={<Privada permiso={1} />}>
+            <Route element={<Privada permiso={1} bloquear_permisos={[2]} />}>
               <Route index element={<Perfil />} />
+
+              {/* Carrito bloqueado para developers */}
               <Route path='carrito' element={<Carrito />} />
             </Route>
 
@@ -67,11 +69,21 @@ const AppRouter = () => {
             <Route path=':slug' element={<Juego />} />
 
             {/* Ruta privada para biblioteca */}
-            <Route element={<Privada permiso={1} />}>
+            <Route element={<Privada permiso={1} bloquear_permisos={[2]} />}>
               <Route path='biblioteca' element={<Biblioteca />} />
             </Route>
           </Route>
           {/* ---- */}
+
+          {/* Rutas para ver perfiles */}
+          {/* /////////////////////// */}
+
+          {/* Ruta para dev */}
+          <Route path='dev' element={<Privada permiso={2} bloquear_permisos={[1]} re_perm='/' />}>
+            <Route index element={<h1>1</h1>} />
+          </Route>
+
+          <Route path='*' element={<Navigate to={'/'} />} />
         </Route>
       </Routes>
     </BrowserRouter>

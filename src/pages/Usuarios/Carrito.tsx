@@ -14,7 +14,7 @@ const Carrito = () => {
       <Navbar />
       <UsuarioSeparador titulo='Juegos en el carrito' />
       <ResumenCarrito juegos={juegos} />
-      {juegos.length > 1 ? <ListaCarrito juegos={juegos} /> : <CarritoVacio />}
+      {juegos.length >= 1 ? <ListaCarrito juegos={juegos} /> : <CarritoVacio />}
     </ContenedorAuto>
   );
 };

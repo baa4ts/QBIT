@@ -30,7 +30,6 @@ const Juegos = () => {
     setCategorias(urlCategoria);
     setOfertas(urlOfertas);
     setBuscar(urlBuscar);
-    console.log(buscar);
   }, [searchParams]);
 
   // Actualizar la URL cuando cambian filtros

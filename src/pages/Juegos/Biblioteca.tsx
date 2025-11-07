@@ -7,6 +7,7 @@ import Paginador from '../../components/Shared/Paginador';
 import SelectorCategorias from '../../components/Shared/SelectorCategorias';
 import BiblioteacaEstadisticas from '../../components/Usuario/BiblioteacaEstadisticas';
 import UltimasCompras from '../../components/Usuario/UltimasCompras';
+import UsuarioSeparador from '../../components/Usuario/UsuarioSeparador';
 import { categoriasPruevas, juegosPruevas } from '../../interfaces/Juegos/Juegos.interface';
 import { GenararUrl } from '../../Utils/GerarUrl';
 
@@ -40,6 +41,8 @@ const Biblioteca = () => {
     <ContenedorAuto>
       {/* Se reutiliza la mayoria de cosas*/}
       <Navbar />
+      <UsuarioSeparador titulo='Tus juegos' />
+
       {/* Menu */}
       <MenuJuego mostrarOfertas={false} buscar={buscar} setBuscar={setBuscar} />
       {/* Menu de categorias */}

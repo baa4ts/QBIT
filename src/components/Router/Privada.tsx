@@ -3,26 +3,34 @@ import { Navigate, Outlet } from 'react-router';
 import { useUsuario } from '../../store/usuarioStore';
 
 export interface PrivadaProps {
-  permiso: number;
+  permiso?: number;
   re_perm?: string;
   re_desa?: string;
+  re_bloq?: string;
+  bloquear_permisos?: number[];
 }
 
 /**
  * Guard para rutas privadas
  * Tipo: Layout
  *
- * @note Obligatorio estar autenticado para acceder
- *
- * @param permiso number → nivel de permiso requerido
- * @param re_perm string → ruta para redireccionar si no tiene permiso (opcional, default = '/usuario')
- * @param re_desa string → ruta para redireccionar si no hay usuario (opcional, default = '/usuario/login')
+ * Redirige automáticamente en tres casos:
+ * 1. Usuario no autenticado → re_desa
+ * 2. Usuario no tiene el permiso requerido → re_perm
+ * 3. Usuario tiene un permiso inválido (bloquear_permisos) → re_bloq
  */
-const Privada = ({ permiso, re_desa = '/usuario/login', re_perm = '/usuario' }: PrivadaProps): JSX.Element => {
+const Privada = ({ permiso, re_desa = '/usuario/login', re_perm = '/', re_bloq = '/', bloquear_permisos = [] }: PrivadaProps): JSX.Element => {
   const { usuario } = useUsuario();
 
   if (!usuario) return <Navigate to={re_desa} replace />;
-  if (usuario.permiso !== permiso) return <Navigate to={re_perm} />;
+
+  if (permiso !== undefined && usuario.permiso !== permiso) {
+    return <Navigate to={re_perm} replace />;
+  }
+
+  if (bloquear_permisos.length && bloquear_permisos.includes(usuario.permiso)) {
+    return <Navigate to={re_bloq} replace />;
+  }
 
   return <Outlet />;
 };

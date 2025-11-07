@@ -10,7 +10,7 @@ const ContenedorAuto = ({ children, className }: Props) => {
   return (
     <>
       <Separador />
-      <article className={`w-full bg-[#191817] sm:w-3/5 ${className}`}>{children}</article>;
+      <article className={`w-full rounded-md bg-[#191817] sm:w-5/8 ${className}`}>{children}</article>;
     </>
   );
 };
