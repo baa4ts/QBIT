@@ -10,52 +10,49 @@ import { categoriasPruevas, juegosPruevas } from '../../interfaces/Juegos/Juegos
 import { GenararUrl } from '../../Utils/GerarUrl';
 
 const Juegos = () => {
-  // Hooks
   const [searchParams] = useSearchParams();
   const navegar = useNavigate();
 
-  // Variables
-  const [pagina, setPagina] = useState<number>(0);
+  // Estados
+  const [pagina, setPagina] = useState<number>(1);
   const [ofertas, setOfertas] = useState<boolean>(false);
   const [categorias, setCategorias] = useState<string[]>([]);
   const [buscar, setBuscar] = useState<string>('');
 
-  // Datos url
-  const urlOfertas = (searchParams.get('ofertas') || '').trim().toLowerCase() === 'true';
-  const urlPage = Number(searchParams.get('page')) || 1;
-  const urlCategoria = searchParams.getAll('categoria');
-
-  //
-  //
-  // Los datos estan en interface (de pruevas)
-  //
-  //
-  //
-
-  // Establecer las categorias
+  // Inicializar desde la URL
   useEffect(() => {
+    const urlOfertas = (searchParams.get('ofertas') || '').trim().toLowerCase() === 'true';
+    const urlPage = Number(searchParams.get('page')) || 1;
+    const urlCategoria = searchParams.getAll('categoria');
+    const urlBuscar = searchParams.get('buscar') || '';
+
     setPagina(urlPage);
     setCategorias(urlCategoria);
     setOfertas(urlOfertas);
-  }, []);
+    setBuscar(urlBuscar);
+    console.log(buscar);
+  }, [searchParams]);
 
-  // Actualizar la url
+  // Actualizar la URL cuando cambian filtros
   useEffect(() => {
     const search = GenararUrl({ pagina, ofertas, categorias, buscar });
-    console.log(ofertas);
     navegar({ pathname: '/juegos', search }, { replace: true });
-  }, [pagina, ofertas, categorias, buscar]);
+  }, [pagina, ofertas, categorias, buscar, navegar]);
 
   return (
     <ContenedorAuto>
-      {/* Se reutiliza el contendor y listado de usuario */}
       <Navbar />
+
       {/* Menu de buscar */}
-      <MenuJuego label='Ofertas' mostrarOfertas activo={ofertas} setActivo={setOfertas} buscarJuego={buscar} setBuscarJuego={setBuscar} />
+      <MenuJuego label='Ofertas' mostrarOfertas activo={ofertas} setActivo={setOfertas} buscar={buscar} setBuscar={setBuscar} />
+
       {/* Menu de categorias */}
       <SelectorCategorias todas={categoriasPruevas} categorias={categorias} setCategorias={setCategorias} />
+
       {/* Listado de juegos */}
       <UltimasCompras mostrarPrecio={true} ultimosJuegos={juegosPruevas} />
+
+      {/* Paginador */}
       <Paginador pagina={pagina} setPagina={setPagina} max={10} />
     </ContenedorAuto>
   );

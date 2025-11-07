@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Switch from '../Shared/Switch';
 
 interface MenuJuegoProps {
@@ -6,14 +6,22 @@ interface MenuJuegoProps {
   activo?: boolean;
   mostrarOfertas?: boolean;
   setActivo?: (valor: boolean) => void;
-  buscarJuego: string;
-  setBuscarJuego: (texto: string) => void;
+  buscar: string;
+  setBuscar: (texto: string) => void;
 }
 
-const MenuJuego = ({ label = 'Ofertas', activo = false, setActivo, buscarJuego, mostrarOfertas = true, setBuscarJuego }: MenuJuegoProps) => {
-  const [texto, setTexto] = useState(buscarJuego || '');
+const MenuJuego = ({ label = 'Ofertas', activo = false, setActivo, buscar, mostrarOfertas = true, setBuscar }: MenuJuegoProps) => {
+  const [texto, setTexto] = useState(buscar || '');
 
-  const handleBuscar = () => setBuscarJuego(texto);
+  // Mantener texto sincronizado si cambiar buscar desde afuera
+  useEffect(() => {
+    setTexto(buscar);
+  }, [buscar]);
+
+  const handleBuscar = () => {
+    setBuscar(texto.trim());
+  };
+
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') handleBuscar();
   };
@@ -21,9 +29,9 @@ const MenuJuego = ({ label = 'Ofertas', activo = false, setActivo, buscarJuego, 
   return (
     <div className='flex flex-col items-start justify-center gap-3 rounded-md bg-[#0A0909] px-3 py-2 font-mono text-white md:m-2 md:flex-row md:items-center md:text-base'>
       {/* switch de ofertas */}
-      {mostrarOfertas && (
+      {mostrarOfertas && setActivo && (
         <div className='w-full md:w-auto md:shrink-0' style={{ flexBasis: '20%' }}>
-          <Switch label={label} activo={activo} setActivo={setActivo!} />
+          <Switch label={label} activo={activo} setActivo={setActivo} />
         </div>
       )}
 

@@ -10,7 +10,7 @@ import type { UsuarioInterface } from '../../interfaces/Usuario/Perfil.interface
 const Perfil = () => {
   const usuario: UsuarioInterface = {
     id: 1,
-    imagenUrl: 'https://i.pinimg.com/736x/cd/35/56/cd3556de028e954d49503939ca861cfc.jpg',
+    imagenUrl: 'https://i.pinimg.com/736x/2d/85/dd/2d85dd0cd66653ffd336afed2ba551ca.jpg',
     nombre: 'Hideo Kojima',
     ubicacion: 'Tokio, Japón (Creador de MGS y DS)',
     ultimos: [

@@ -41,7 +41,7 @@ const Biblioteca = () => {
       {/* Se reutiliza la mayoria de cosas*/}
       <Navbar />
       {/* Menu */}
-      <MenuJuego mostrarOfertas={false} buscarJuego={buscar} setBuscarJuego={setBuscar} />
+      <MenuJuego mostrarOfertas={false} buscar={buscar} setBuscar={setBuscar} />
       {/* Menu de categorias */}
       <SelectorCategorias todas={categoriasPruevas} categorias={categorias} setCategorias={setCategorias} />
       {/* Separador con texto */}
