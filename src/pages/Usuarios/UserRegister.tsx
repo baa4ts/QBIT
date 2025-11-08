@@ -1,138 +1,126 @@
-import { useForm } from '@tanstack/react-form';
-import { Lock, Mail, User } from 'lucide-react';
-import AutenticacionTitulo from '../../components/Autenticacion/AutenticacionTitulo';
-import BotonDeEnvio from '../../components/Autenticacion/BotonDeEnvio';
-import RedireccionAutenticacion from '../../components/Autenticacion/RedireccionAutenticacion';
-import { registerScheme } from '../../validators/Usuarios';
+import { useState } from 'react'
+import { Lock, Mail, User } from 'lucide-react'
+import { useNavigate } from 'react-router'
+import axios from 'axios'
+import BotonDeEnvio from '../../components/Autenticacion/BotonDeEnvio'
+import AutenticacionTitulo from '../../components/Autenticacion/AutenticacionTitulo'
+import RedireccionAutenticacion from '../../components/Autenticacion/RedireccionAutenticacion'
+import { useUsuario, type UsuarioInter } from '../../store/usuarioStore'
 
 const UserRegister = () => {
-  // TanStack Form
-  // Referencia para crear algo basico
-  // https://tanstack.com/form/latest/docs/framework/react/examples/simple
-  //
-  //
-  //
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorServer, setErrorServer] = useState('')
+  const { guardarUsuario } = useUsuario()
+  const navigate = useNavigate()
 
-  // Configuracion de formulario de TanStack Form
-  const formulario = useForm({
-    //
-    // Valores por defecto
-    //
-    defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-    },
-    //
-    // Validador de los datos
-    //
-    validators: {
-      onSubmit: registerScheme,
-    },
-    //
-    // Acciones al subir subir datos
-    //
-    onSubmit: async ({ value }) => {
-      console.log(value);
-      await new Promise(resolve => setTimeout(resolve, 3500));
-      console.log('Time');
-    },
-  });
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setErrorServer('')
+
+    try {
+      const response = await axios.post<UsuarioInter>(
+        'http://localhost:80/usuarios/register',
+        { nombre: username, email, password },
+        { headers: { 'Content-Type': 'application/json' } }
+      )
+
+      guardarUsuario(response.data)
+      navigate('/usuario')
+    } catch {
+      setErrorServer('Error en el registro')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <div className='flex h-dvh w-full items-center justify-center bg-black'>
       <form
         className='flex w-full max-w-sm flex-col space-y-4 rounded-lg bg-white p-4 shadow-xl'
-        onSubmit={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          formulario.handleSubmit();
-        }}>
+        onSubmit={handleRegister}
+      >
         <AutenticacionTitulo titulo='Register' />
 
-        {/* Entrada para el username */}
-        <formulario.Field name='username'>
-          {entrada => (
-            <div className='flex flex-col space-y-2'>
-              <label htmlFor={entrada.name} className='font-po text-sm font-medium text-gray-700'>
-                Username
-              </label>
-              <section className='flex items-center rounded-md border-2 border-gray-400 p-2 transition-all duration-300 focus-within:border-black focus-within:ring-2 focus-within:ring-black/30 hover:border-black/60'>
-                <User className='mr-2 h-5 w-5 text-gray-500' />
-                <input
-                  id={entrada.name}
-                  type='text'
-                  placeholder='Tu nombre'
-                  value={entrada.state.value}
-                  onChange={e => entrada.handleChange(e.target.value)}
-                  className='font-po w-full border-none bg-transparent font-medium outline-none'
-                  disabled={formulario.state.isSubmitting}
-                  required
-                />
-              </section>
-            </div>
-          )}
-        </formulario.Field>
+        {/* Username */}
+        <div className='flex flex-col space-y-2'>
+          <label className='font-po text-sm font-medium text-gray-700'>Username</label>
+          <section className='flex items-center rounded-md border-2 border-gray-400 p-2'>
+            <User className='mr-2 h-5 w-5 text-gray-500' />
+            <input
+              type='text'
+              placeholder='Tu nombre'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              className='font-po w-full border-none bg-transparent outline-none'
+              disabled={isSubmitting}
+              required
+            />
+          </section>
+        </div>
 
-        {/* Entrada para el email */}
-        <formulario.Field name='email'>
-          {entrada => (
-            <div className='flex flex-col space-y-2'>
-              <label htmlFor={entrada.name} className='font-po text-sm font-medium text-gray-700'>
-                Email
-              </label>
-              <section className='flex items-center rounded-md border-2 border-gray-400 p-2 transition-all duration-300 focus-within:border-black focus-within:ring-2 focus-within:ring-black/30 hover:border-black/60'>
-                <Mail className='mr-2 h-5 w-5 text-gray-500' />
-                <input
-                  id={entrada.name}
-                  type='email'
-                  placeholder='tu@email.com'
-                  value={entrada.state.value}
-                  onChange={e => entrada.handleChange(e.target.value)}
-                  className='font-po w-full border-none bg-transparent font-medium outline-none'
-                  disabled={formulario.state.isSubmitting}
-                  required
-                />
-              </section>
-            </div>
-          )}
-        </formulario.Field>
+        {/* Email */}
+        <div className='flex flex-col space-y-2'>
+          <label className='font-po text-sm font-medium text-gray-700'>Email</label>
+          <section className='flex items-center rounded-md border-2 border-gray-400 p-2'>
+            <Mail className='mr-2 h-5 w-5 text-gray-500' />
+            <input
+              type='email'
+              placeholder='tu@email.com'
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              className='font-po w-full border-none bg-transparent outline-none'
+              disabled={isSubmitting}
+              required
+            />
+          </section>
+        </div>
 
-        {/* Entrada para la password */}
-        <formulario.Field name='password'>
-          {entrada => (
-            <div className='flex flex-col space-y-2'>
-              <label htmlFor={entrada.name} className='font-po text-sm font-medium text-gray-700'>
-                Contraseña
-              </label>
-              <section className='flex items-center rounded-md border-2 border-gray-400 p-2 transition-all duration-300 focus-within:border-black focus-within:ring-2 focus-within:ring-black/30 hover:border-black/60'>
-                <Lock className='mr-2 h-5 w-5 text-gray-500' />
-                <input
-                  id={entrada.name}
-                  type='password'
-                  placeholder='********'
-                  value={entrada.state.value}
-                  onChange={e => entrada.handleChange(e.target.value)}
-                  className='font-po w-full border-none bg-transparent font-medium outline-none'
-                  disabled={formulario.state.isSubmitting}
-                  required
-                />
-              </section>
-            </div>
-          )}
-        </formulario.Field>
+        {/* Password */}
+        <div className='flex flex-col space-y-2'>
+          <label className='font-po text-sm font-medium text-gray-700'>Contrasena</label>
+          <section className='flex items-center rounded-md border-2 border-gray-400 p-2'>
+            <Lock className='mr-2 h-5 w-5 text-gray-500' />
+            <input
+              type='password'
+              placeholder='********'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              className='font-po w-full border-none bg-transparent outline-none'
+              disabled={isSubmitting}
+              required
+            />
+          </section>
+        </div>
 
-        {/* Botton para el evento del formulario */}
+        {/* Boton */}
         <div className='pt-4'>
-          <formulario.Subscribe
-            selector={estado => [estado.canSubmit, estado.isSubmitting]}
-            children={([canSubmit, isSubmitting]) => <BotonDeEnvio canSubmit={canSubmit} isSubmitting={isSubmitting} texto='Iniciar Sesion' textoEnviando='Iniciando...' />}
+          <BotonDeEnvio
+            canSubmit={!!username && !!email && !!password}
+            isSubmitting={isSubmitting}
+            texto='Registrar'
+            textoEnviando='Registrando...'
           />
         </div>
-        <RedireccionAutenticacion enlace='/usuario/login' mensaje_a='ya tienes cuenta' mensaje_b='Login' />
+
+        <RedireccionAutenticacion
+          enlace='/usuario/login'
+          mensaje_a='ya tienes cuenta'
+          mensaje_b='Login'
+        />
+
+        {/* Error */}
+        {errorServer && (
+          <div className='mt-2 text-center text-red-500 text-sm font-medium'>
+            {errorServer}
+          </div>
+        )}
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default UserRegister;
+export default UserRegister
