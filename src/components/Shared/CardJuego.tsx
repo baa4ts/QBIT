@@ -2,23 +2,23 @@ import { memo } from 'react';
 import { Link } from 'react-router';
 
 export interface CardJuegoProps {
-  nombre: string;
-  imagen: string;
+  titulo: string;
+  banner: string;
   categorias: string[];
   precio?: number;
   mostrarPrecio?: boolean;
   slug: string;
 }
 
-const CardJuego = memo(({ nombre, imagen, categorias, precio, mostrarPrecio = false, slug }: CardJuegoProps) => {
+const CardJuego = memo(({ titulo, banner, categorias, precio, mostrarPrecio = false, slug }: CardJuegoProps) => {
   return (
     <Link to={`/juegos/${slug}`} className='flex flex-row gap-3 rounded-md bg-[#354553] p-2 transition-all duration-200 hover:scale-[1.01] hover:bg-[#3f5161]'>
       <div className='w-1/3 md:w-1/2'>
-        <img className='h-full w-full rounded-sm object-cover' src={imagen} alt={nombre} />
+        <img className='h-full w-full rounded-sm object-cover' src={banner} alt={titulo} />
       </div>
 
       <div className='flex w-2/3 flex-col justify-center px-2'>
-        <h1 className='text-sm font-semibold text-white md:text-lg lg:text-2xl'>{nombre}</h1>
+        <h1 className='text-sm font-semibold text-white md:text-lg lg:text-2xl'>{titulo}</h1>
 
         {mostrarPrecio && precio !== undefined && <p className='mt-1 text-lg font-bold text-white'>${precio.toFixed(2)}</p>}
 

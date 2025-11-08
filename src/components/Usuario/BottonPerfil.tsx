@@ -11,7 +11,7 @@ interface BotonProps {
 const BottonPerfil = memo(
   ({ children, to, onClick, color = 'primary' }: BotonProps) => {
     const baseClass =
-      'flex h-9 min-w-[60px] max-w-[140px] flex-1 items-center justify-center rounded-md text-xs sm:text-sm md:text-base font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 active:scale-95';
+      'flex items-center justify-center rounded-md px-3 py-2 text-xs sm:text-sm md:text-base font-semibold text-white shadow-md transition-all duration-200 hover:scale-105 active:scale-95 w-full sm:w-auto';
     const colorClass = color === 'primary' ? 'bg-[#0A0909]' : 'bg-red-600';
     const claseFinal = `${baseClass} ${colorClass}`;
 
@@ -21,6 +21,7 @@ const BottonPerfil = memo(
           {children}
         </Link>
       );
+
     return (
       <button onClick={onClick} className={claseFinal}>
         {children}
@@ -28,6 +29,6 @@ const BottonPerfil = memo(
     );
   },
   () => true,
-); // memo siempre devuelve el mismo string, evita re-render
+);
 
 export default BottonPerfil;

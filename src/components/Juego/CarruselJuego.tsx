@@ -1,13 +1,9 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
-
-export interface Recurso {
-  type: 'imagen' | 'video';
-  recurso: string;
-}
+import type { JuegoRecursoInterface } from '../../interfaces/Juego/Juego.interface';
 
 interface CarruselJuegoProps {
-  recursos: Recurso[];
+  recursos: JuegoRecursoInterface[];
   auto?: boolean;
 }
 
@@ -24,14 +20,16 @@ const CarruselJuego = ({ recursos, auto = false }: CarruselJuegoProps) => {
     return () => clearInterval(timer);
   }, [autoPlay]);
 
+  const recursoActual = recursos[indice];
+
   return (
     <section className='relative w-full overflow-hidden rounded-2xl p-4'>
       <div className='relative'>
         {/* recurso dinamico */}
-        {recursos[indice].type === 'imagen' ? (
-          <img src={recursos[indice].recurso} alt={`recurso-${indice}`} className='h-60 w-full rounded-2xl object-cover transition-all duration-500 sm:h-[360px] md:h-[420px]' />
+        {recursoActual.tipo === 'imagen' ? (
+          <img src={recursoActual.recurso} alt={`recurso-${indice}`} className='h-60 w-full rounded-2xl object-cover transition-all duration-500 sm:h-[360px] md:h-[420px]' />
         ) : (
-          <video src={recursos[indice].recurso} controls autoPlay loop muted className='h-60 w-full rounded-2xl object-cover sm:h-[360px] md:h-[420px]' />
+          <video src={recursoActual.recurso} controls autoPlay loop muted className='h-60 w-full rounded-2xl object-cover sm:h-[360px] md:h-[420px]' />
         )}
 
         {/* botones de navegacion */}

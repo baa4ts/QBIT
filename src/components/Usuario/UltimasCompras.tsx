@@ -13,7 +13,7 @@ const UltimasCompras = ({ mostrarPrecio = false, ultimosJuegos }: UltimasCompras
         <CardJuegoVacio />
       ) : (
         ultimosJuegos.map(juego => (
-          <CardJuego key={juego.slug} nombre={juego.nombre} imagen={juego.imagen} categorias={juego.categorias} precio={juego.precio} mostrarPrecio={mostrarPrecio} slug={juego.slug} />
+          <CardJuego key={juego.slug} titulo={juego.titulo} banner={juego.banner} categorias={juego.categorias} precio={juego.precio} mostrarPrecio={mostrarPrecio} slug={juego.slug} />
         ))
       )}
     </section>

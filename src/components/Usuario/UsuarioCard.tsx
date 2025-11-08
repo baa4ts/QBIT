@@ -6,14 +6,16 @@ export interface UsuarioCardProps {
 
 const UsuarioCard = ({ imagenUrl, nombre, biografia }: UsuarioCardProps) => {
   return (
-    <article className='flex w-full flex-col gap-4 sm:flex-row sm:gap-6'>
-      <div className='flex w-full justify-center p-3 sm:w-1/4'>
-        <img className='h-48 w-48 rounded-2xl object-cover sm:h-48 sm:w-48' src={imagenUrl} alt={`Imagen de perfil de ${nombre}`} />
+    <article className='flex w-full flex-row items-center gap-3 sm:gap-6'>
+      {/** imagen a la izquierda siempre */}
+      <div className='shrink-0'>
+        <img className='h-24 w-24 rounded-2xl object-cover sm:h-32 sm:w-32 md:h-40 md:w-40 lg:h-48 lg:w-48' src={imagenUrl} alt={`Imagen de perfil de ${nombre}`} />
       </div>
 
-      <div className='flex w-full flex-col justify-center text-center sm:w-3/4 sm:text-left'>
-        <h1 className='font-po text-xl font-extrabold text-white sm:text-2xl md:text-3xl lg:text-4xl'>{nombre}</h1>
-        <p className='mt-2 font-mono text-sm font-light text-white/60 sm:text-base md:text-lg'>{biografia}</p>
+      {/** bio a la derecha */}
+      <div className='flex flex-col justify-center overflow-hidden text-left'>
+        <h1 className='font-po truncate text-base font-bold text-white sm:text-lg md:text-xl lg:text-2xl'>{nombre}</h1>
+        <p className='mt-1 line-clamp-3 font-mono text-xs text-white/60 sm:text-sm md:text-base'>{biografia}</p>
       </div>
     </article>
   );

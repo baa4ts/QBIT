@@ -2,41 +2,39 @@ import AutorJuego from '../../components/Juego/AutorJuego';
 import CarruselJuego from '../../components/Juego/CarruselJuego';
 import CategoriasJuego from '../../components/Juego/CategoriasJuego';
 import InfoJuego from '../../components/Juego/InfoJuego';
+import OpcionesJuegos from '../../components/Juego/OpcionesJuegos';
 import ContenedorAuto from '../../components/Shared/ContenedorAuto';
 import Navbar from '../../components/Shared/Navbar';
+import type { JuegoInterface } from '../../interfaces/Juego/Juego.interface';
 
 const Juego = () => {
-  const juego = {
+  const datos: JuegoInterface = {
     id: 1,
-    titulo: 'Hades II',
-    slug: 'hades-2',
-    precio: 22.99,
-    autor: 'Supergiant Games',
-    categorias: ['Accion', 'Aventura', 'Roguelike'],
-    bio: 'Hades II es la esperada secuela del aclamado roguelike de Supergiant Games. Juega como la princesa del inframundo en una lucha contra el Titan del Tiempo, en una historia mitologica llena de accion, estrategia y una ambientacion oscura y envolvente.',
+    titulo: 'Metal Slug',
+    slug: 'meta-slug',
+    precio: 19.99,
+    autor: { id: 1, nombre: 'Hideo Kojima' },
+    categorias: ['Mottos', 'Auto', 'Accion'],
+    descripcion: 'Juego de disparo y accion',
     recursos: [
-      {
-        type: 'video' as const,
-        recurso: 'https://cdn.cloudflare.steamstatic.com/steam/apps/256945222/movie480_vp9.webm',
-      },
-      {
-        type: 'imagen' as const,
-        recurso: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg',
-      },
-      {
-        type: 'imagen' as const,
-        recurso: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/526870/header.jpg',
-      },
+      { tipo: 'imagen', recurso: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
+      { tipo: 'imagen', recurso: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
+      { tipo: 'imagen', recurso: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
+      { tipo: 'imagen', recurso: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
+      { tipo: 'imagen', recurso: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
     ],
+    banner: '',
+    opciones: { usuario: true, descarga: 'asdad' },
   };
 
   return (
     <ContenedorAuto>
       <Navbar />
-      <CarruselJuego recursos={juego.recursos} auto />
-      <InfoJuego id={juego.id} titulo={juego.titulo} precio={juego.precio} imagen={juego.recursos[1].recurso} slug={juego.slug} bio={juego.bio} />
-      <CategoriasJuego categorias={juego.categorias} />
-      <AutorJuego nombre={juego.autor} />
+      <CarruselJuego recursos={datos.recursos} auto />
+      <InfoJuego titulo={datos.titulo} precio={datos.precio} bio={datos.descripcion} />
+      <CategoriasJuego categorias={datos.categorias} />
+      <OpcionesJuegos juego={datos} />
+      <AutorJuego Autor={datos.autor} />
     </ContenedorAuto>
   );
 };

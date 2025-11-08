@@ -1,16 +1,15 @@
 import { User } from 'lucide-react';
+import { memo } from 'react';
+import { Link } from 'react-router';
+import type { JuegoActorInterface } from '../../interfaces/Juego/Juego.interface';
 
-interface AutorJuegoProps {
-  nombre: string;
-}
-
-const AutorJuego = ({ nombre }: AutorJuegoProps) => {
+const AutorJuego = memo(({ Autor }: { Autor: JuegoActorInterface }) => {
   return (
-    <section className='m-2 flex items-center gap-3 rounded-xl bg-[#0a0a0a] p-3 text-white'>
+    <Link className='m-2 flex items-center gap-3 rounded-xl bg-[#0a0a0a] p-3 text-white' to={`/${Autor.id}`}>
       <User className='h-6 w-6 text-gray-300' />
-      <span className='text-lg font-semibold'>{nombre}</span>
-    </section>
+      <span className='text-lg font-semibold'>{Autor.nombre}</span>
+    </Link>
   );
-};
+});
 
 export default AutorJuego;
