@@ -34,9 +34,7 @@ const InfoJuego = ({ id, titulo, precio, imagen, slug, bio }: InfoJuegoProps) =>
         {usuario && (
           <button
             onClick={handleClick}
-            className={`flex items-center gap-2 rounded-lg px-4 py-2 font-semibold transition active:scale-95 ${
-              enCarrito ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'
-            }`}>
+            className={`flex items-center gap-2 rounded-lg px-4 py-2 font-semibold transition active:scale-95 ${enCarrito ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'}`}>
             {enCarrito ? (
               <>
                 <Trash2 className='h-5 w-5' />

@@ -25,7 +25,7 @@ const BarraOpciones = memo(({ movil, usuario }: { movil: boolean; usuario: any }
         </Link>
       )}
 
-      {/* Biblioteca solo si hay usuario */}
+      {/* Carrito solo si hay usuario */}
       {!!usuario && (
         <Link to='/usuario/carrito' className='font-po text-lg font-bold text-white transition hover:text-emerald-400'>
           <ShoppingCart />
@@ -64,7 +64,7 @@ const Navbar = () => {
       {/* Barra de botones */}
       <BarraOpciones movil={movil} usuario={usuario} />
 
-      {/* Iconos flotantes */}
+      {/* Icono flotantes */}
       <div className='flex gap-3'>
         <IconoUsuario usuario={usuario} />
       </div>

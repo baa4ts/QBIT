@@ -6,14 +6,14 @@ export interface UsuarioCardProps {
 
 const UsuarioCard = ({ imagenUrl, nombre, biografia }: UsuarioCardProps) => {
   return (
-    <article className='flex w-full flex-row'>
-      <div className='sm:3/8 w-2/6 p-3 md:w-1/4'>
-        <img className='h-full w-full rounded-2xl object-cover' src={imagenUrl} alt={`Imagen de perfil de ${nombre}`} />
+    <article className='flex w-full flex-col gap-4 sm:flex-row sm:gap-6'>
+      <div className='flex w-full justify-center p-3 sm:w-1/4'>
+        <img className='h-48 w-48 rounded-2xl object-cover sm:h-48 sm:w-48' src={imagenUrl} alt={`Imagen de perfil de ${nombre}`} />
       </div>
 
-      <div className='sm:5/8 flex w-4/6 flex-col justify-center md:w-3/4'>
-        <h1 className='font-po text-2xl font-extrabold text-white sm:text-3xl md:text-4xl lg:text-6xl'>{nombre}</h1>
-        <p className='mt-2 font-mono font-light text-white/60'>{biografia}</p>
+      <div className='flex w-full flex-col justify-center text-center sm:w-3/4 sm:text-left'>
+        <h1 className='font-po text-xl font-extrabold text-white sm:text-2xl md:text-3xl lg:text-4xl'>{nombre}</h1>
+        <p className='mt-2 font-mono text-sm font-light text-white/60 sm:text-base md:text-lg'>{biografia}</p>
       </div>
     </article>
   );
