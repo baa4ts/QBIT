@@ -8,7 +8,7 @@ import SelectorCategorias from '../../components/Shared/SelectorCategorias';
 import BiblioteacaEstadisticas from '../../components/Usuario/BiblioteacaEstadisticas';
 import UltimasCompras from '../../components/Usuario/UltimasCompras';
 import UsuarioSeparador from '../../components/Usuario/UsuarioSeparador';
-import { categoriasPruevas, juegosPruevas } from '../../interfaces/Juegos/Juegos.interface';
+import { datosJuegosPrueva } from '../../interfaces/Juegos/Juegos.interface';
 import { GenararUrl } from '../../Utils/GerarUrl';
 
 const Biblioteca = () => {
@@ -37,6 +37,9 @@ const Biblioteca = () => {
     navegar({ pathname: '/juegos/biblioteca', search }, { replace: true });
   }, [pagina, categorias, buscar]);
 
+  // Mismo tipado que el /juegos pero diferente endpoint
+  const datos = datosJuegosPrueva;
+
   return (
     <ContenedorAuto>
       {/* Se reutiliza la mayoria de cosas*/}
@@ -46,12 +49,12 @@ const Biblioteca = () => {
       {/* Menu */}
       <MenuJuego mostrarOfertas={false} buscar={buscar} setBuscar={setBuscar} />
       {/* Menu de categorias */}
-      <SelectorCategorias todas={categoriasPruevas} categorias={categorias} setCategorias={setCategorias} />
+      <SelectorCategorias todas={datos.categorias} categorias={categorias} setCategorias={setCategorias} />
       {/* Separador con texto */}
       <BiblioteacaEstadisticas titulo='Total de Juegos' numero={16} />
       {/* Listado de juegos */}
-      <UltimasCompras mostrarPrecio={true} ultimosJuegos={juegosPruevas} />
-      <Paginador pagina={pagina} setPagina={setPagina} max={1} />
+      <UltimasCompras mostrarPrecio={true} ultimosJuegos={datos.juegos} />
+      <Paginador pagina={pagina} setPagina={setPagina} max={datos.meta.maxPage} />
     </ContenedorAuto>
   );
 };

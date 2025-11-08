@@ -24,7 +24,7 @@ const Juego = () => {
       { tipo: 'imagen', recurso: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg' },
     ],
     banner: '',
-    opciones: { usuario: true, descarga: 'asdad' },
+    opciones: { usuario: false, descarga: 'asdad' },
   };
 
   return (

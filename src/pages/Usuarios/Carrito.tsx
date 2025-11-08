@@ -9,11 +9,17 @@ import { useCarrito } from '../../store/carritoStore';
 const Carrito = () => {
   const { juegos } = useCarrito();
 
+  const handlePagar = () => {
+    const id = juegos.map(i => i.id);
+    console.log(id);
+  };
+
   return (
     <ContenedorAuto className='mt-15'>
       <Navbar />
       <UsuarioSeparador titulo='Juegos en el carrito' />
-      <ResumenCarrito juegos={juegos} />
+      <ResumenCarrito handlePagar={handlePagar} juegos={juegos} />
+
       {juegos.length >= 1 ? <ListaCarrito juegos={juegos} /> : <CarritoVacio />}
     </ContenedorAuto>
   );

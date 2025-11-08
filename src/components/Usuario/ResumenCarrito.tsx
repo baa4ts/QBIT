@@ -2,9 +2,10 @@ import { useCarrito, type JuegoCarrito } from '../../store/carritoStore';
 
 export interface ResumenCarritoProps {
   juegos: JuegoCarrito[];
+  handlePagar: () => any;
 }
 
-const ResumenCarrito = ({ juegos }: ResumenCarritoProps) => {
+const ResumenCarrito = ({ juegos, handlePagar }: ResumenCarritoProps) => {
   const { limpiar } = useCarrito();
   const cantidad = juegos.length;
   const total = juegos.reduce((acc, juego) => acc + juego.precio, 0);
@@ -26,7 +27,9 @@ const ResumenCarrito = ({ juegos }: ResumenCarritoProps) => {
       {/* Derecha: Botones */}
       {total > 0 && (
         <div className='flex flex-col gap-2 md:flex-row'>
-          <button className='rounded-md bg-green-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-green-700 md:px-6 md:py-3 md:text-xl'>Proceder al pago</button>
+          <button onClick={handlePagar} className='rounded-md bg-green-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-green-700 md:px-6 md:py-3 md:text-xl'>
+            Proceder al pago
+          </button>
           <button onClick={limpiar} className='rounded-md bg-red-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-red-700 md:px-6 md:py-3 md:text-xl'>
             Limpiar
           </button>

@@ -6,7 +6,7 @@ import Navbar from '../../components/Shared/Navbar';
 import Paginador from '../../components/Shared/Paginador';
 import SelectorCategorias from '../../components/Shared/SelectorCategorias';
 import UltimasCompras from '../../components/Usuario/UltimasCompras';
-import { categoriasPruevas, juegosPruevas } from '../../interfaces/Juegos/Juegos.interface';
+import { datosJuegosPrueva } from '../../interfaces/Juegos/Juegos.interface';
 import { GenararUrl } from '../../Utils/GerarUrl';
 
 const Juegos = () => {
@@ -30,13 +30,15 @@ const Juegos = () => {
     setCategorias(urlCategoria);
     setOfertas(urlOfertas);
     setBuscar(urlBuscar);
-  }, [searchParams]);
+  }, []);
 
   // Actualizar la URL cuando cambian filtros
   useEffect(() => {
     const search = GenararUrl({ pagina, ofertas, categorias, buscar });
     navegar({ pathname: '/juegos', search }, { replace: true });
   }, [pagina, ofertas, categorias, buscar, navegar]);
+
+  const datos = datosJuegosPrueva;
 
   return (
     <ContenedorAuto>
@@ -46,13 +48,13 @@ const Juegos = () => {
       <MenuJuego label='Ofertas' mostrarOfertas activo={ofertas} setActivo={setOfertas} buscar={buscar} setBuscar={setBuscar} />
 
       {/* Menu de categorias */}
-      <SelectorCategorias todas={categoriasPruevas} categorias={categorias} setCategorias={setCategorias} />
+      <SelectorCategorias todas={datos.categorias} categorias={categorias} setCategorias={setCategorias} />
 
       {/* Listado de juegos */}
-      <UltimasCompras mostrarPrecio={true} ultimosJuegos={juegosPruevas} />
+      <UltimasCompras mostrarPrecio={true} ultimosJuegos={datos.juegos} />
 
       {/* Paginador */}
-      <Paginador pagina={pagina} setPagina={setPagina} max={10} />
+      <Paginador pagina={pagina} setPagina={setPagina} max={datos.meta.maxPage} />
     </ContenedorAuto>
   );
 };
