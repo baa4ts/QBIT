@@ -16,7 +16,7 @@ export interface UsuarioInterface {
 
 // datos para test
 export const testUsuario: UsuarioInterface = {
-  id: "adsad",
+  id: 'adsad',
   icono: 'https://i.pinimg.com/736x/cd/35/56/cd3556de028e954d49503939ca861cfc.jpg',
   nombre: 'Hideo Kojima',
   biografia: 'Tokio, Japón (Creador de MGS y DS)',

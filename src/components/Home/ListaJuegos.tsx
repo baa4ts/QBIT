@@ -1,16 +1,9 @@
 import { Link } from 'react-router';
-
-interface Juego {
-  id: number;
-  titulo: string;
-  imagen: string;
-  precio: number;
-  slug: string;
-}
+import type { JuegoHome } from '../../Actions/Home';
 
 interface ListaJuegosProps {
   titulo: string;
-  juegos: Juego[];
+  juegos: JuegoHome[];
   verMas: string;
 }
 
@@ -21,7 +14,7 @@ const ListaJuegos = ({ titulo, juegos, verMas }: ListaJuegosProps) => {
       <div className='flex flex-col gap-3'>
         {juegos.map(j => (
           <Link key={j.id} to={`/juegos/${j.slug}`} className='flex items-center gap-4 overflow-hidden rounded-xl bg-[#111] p-2 transition hover:bg-[#1b1b1b]'>
-            <img src={j.imagen} alt={j.titulo} className='h-20 w-32 shrink-0 rounded-md object-cover' />
+            <img src={j.banner} alt={j.titulo} className='h-20 w-32 shrink-0 rounded-md object-cover' />
             <div className='flex flex-col'>
               <h3 className='text-lg font-semibold text-white'>{j.titulo}</h3>
               <span className='font-semibold text-green-400'>${j.precio.toFixed(2)}</span>

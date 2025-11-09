@@ -6,8 +6,6 @@ export interface JuegosInterface {
   slug: string;
 }
 
-export interface CategoriasInterface extends Array<string> {}
-
 export interface MetaInterface {
   page: number;
   maxPage: number;
@@ -15,7 +13,6 @@ export interface MetaInterface {
 export interface JuegosPeticionInterface {
   meta: MetaInterface;
   juegos: Array<JuegosInterface>;
-  categorias: CategoriasInterface;
 }
 
 export const datosJuegosPrueva: JuegosPeticionInterface = {
@@ -95,5 +92,4 @@ export const datosJuegosPrueva: JuegosPeticionInterface = {
       slug: 'terraria',
     },
   ],
-  categorias: ['Accion', 'Aventura', 'Roguelike', 'Estrategia', 'Simulacion', 'Terror', 'Construccion', 'Deportes', 'Multijugador', 'Supervivencia'],
 };

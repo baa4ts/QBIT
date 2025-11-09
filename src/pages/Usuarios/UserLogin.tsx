@@ -1,47 +1,40 @@
-import { useState } from 'react'
-import { Lock, Mail } from 'lucide-react'
-import { useNavigate } from 'react-router'
-import axios from 'axios'
-import BotonDeEnvio from '../../components/Autenticacion/BotonDeEnvio'
-import AutenticacionTitulo from '../../components/Autenticacion/AutenticacionTitulo'
-import RedireccionAutenticacion from '../../components/Autenticacion/RedireccionAutenticacion'
-import { useUsuario, type UsuarioInter } from '../../store/usuarioStore'
+import { Lock, Mail } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { API } from '../../Actions/API';
+import AutenticacionTitulo from '../../components/Autenticacion/AutenticacionTitulo';
+import BotonDeEnvio from '../../components/Autenticacion/BotonDeEnvio';
+import RedireccionAutenticacion from '../../components/Autenticacion/RedireccionAutenticacion';
+import { useUsuario, type UsuarioInter } from '../../store/usuarioStore';
 
 const UserLogin = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorServer, setErrorServer] = useState('')
-  const { guardarUsuario } = useUsuario()
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorServer, setErrorServer] = useState('');
+  const { guardarUsuario } = useUsuario();
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setErrorServer('')
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorServer('');
 
     try {
-      const response = await axios.post<UsuarioInter>(
-        'http://localhost:80/usuarios/login',
-        { email, password },
-        { headers: { 'Content-Type': 'application/json' } }
-      )
+      const response = await API.post<UsuarioInter>('/usuarios/login', { email, password });
 
-      guardarUsuario(response.data)
-      navigate('/usuario')
+      guardarUsuario(response.data);
+      navigate('/usuario');
     } catch {
-      setErrorServer('Email o password incorrectos')
+      setErrorServer('Email o password incorrectos');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className='flex h-dvh w-full items-center justify-center bg-black'>
-      <form
-        className='flex w-full max-w-sm flex-col space-y-4 rounded-lg bg-white p-4 shadow-xl'
-        onSubmit={handleLogin}
-      >
+      <form className='flex w-full max-w-sm flex-col space-y-4 rounded-lg bg-white p-4 shadow-xl' onSubmit={handleLogin}>
         <AutenticacionTitulo titulo='Login' />
 
         {/* Email */}
@@ -80,29 +73,16 @@ const UserLogin = () => {
 
         {/* Boton */}
         <div className='pt-4'>
-          <BotonDeEnvio
-            canSubmit={!!email && !!password}
-            isSubmitting={isSubmitting}
-            texto='Iniciar Sesion'
-            textoEnviando='Iniciando...'
-          />
+          <BotonDeEnvio canSubmit={!!email && !!password} isSubmitting={isSubmitting} texto='Iniciar Sesion' textoEnviando='Iniciando...' />
         </div>
 
-        <RedireccionAutenticacion
-          enlace='/usuario/register'
-          mensaje_a='No tienes cuenta'
-          mensaje_b='Register'
-        />
+        <RedireccionAutenticacion enlace='/usuario/register' mensaje_a='No tienes cuenta' mensaje_b='Register' />
 
         {/* Error */}
-        {errorServer && (
-          <div className='mt-2 text-center text-red-500 text-sm font-medium'>
-            {errorServer}
-          </div>
-        )}
+        {errorServer && <div className='mt-2 text-center text-sm font-medium text-red-500'>{errorServer}</div>}
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default UserLogin
+export default UserLogin;

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
+import { obtenerJuegos } from '../../Actions/Juegos.actions';
 import ContenedorAuto from '../../components/Shared/ContenedorAuto';
 import MenuJuego from '../../components/Shared/MenuJuego';
 import Navbar from '../../components/Shared/Navbar';
 import Paginador from '../../components/Shared/Paginador';
 import SelectorCategorias from '../../components/Shared/SelectorCategorias';
 import UltimasCompras from '../../components/Usuario/UltimasCompras';
-import { datosJuegosPrueva } from '../../interfaces/Juegos/Juegos.interface';
 import { GenararUrl } from '../../Utils/GerarUrl';
 
 const Juegos = () => {
@@ -18,6 +18,8 @@ const Juegos = () => {
   const [ofertas, setOfertas] = useState<boolean>(false);
   const [categorias, setCategorias] = useState<string[]>([]);
   const [buscar, setBuscar] = useState<string>('');
+  const [data, setData] = useState<any>(null);
+  const [cargando, setCargando] = useState<boolean>(false);
 
   // Inicializar desde la URL
   useEffect(() => {
@@ -38,23 +40,42 @@ const Juegos = () => {
     navegar({ pathname: '/juegos', search }, { replace: true });
   }, [pagina, ofertas, categorias, buscar, navegar]);
 
-  const datos = datosJuegosPrueva;
+  // Llamada al backend
+  useEffect(() => {
+    const fetchData = async () => {
+      setCargando(true);
+      const search = GenararUrl({ pagina, ofertas, categorias, buscar });
+      const result = await obtenerJuegos({ parametros: search });
+      setData(result);
+      setCargando(false);
+    };
+    fetchData();
+  }, [pagina, ofertas, categorias, buscar]);
+
+  if (cargando) {
+    return (
+      <ContenedorAuto>
+        <Navbar />
+        <p className='mt-10 text-center text-lg'>Cargando...</p>
+      </ContenedorAuto>
+    );
+  }
 
   return (
     <ContenedorAuto>
       <Navbar />
 
-      {/* Menu de buscar */}
+      {/* Menu buscar */}
       <MenuJuego label='Ofertas' mostrarOfertas activo={ofertas} setActivo={setOfertas} buscar={buscar} setBuscar={setBuscar} />
 
-      {/* Menu de categorias */}
-      <SelectorCategorias todas={datos.categorias} categorias={categorias} setCategorias={setCategorias} />
+      {/* Categorias */}
+      <SelectorCategorias categorias={categorias} setCategorias={setCategorias} />
 
-      {/* Listado de juegos */}
-      <UltimasCompras mostrarPrecio={true} ultimosJuegos={datos.juegos} />
+      {/* Juegos */}
+      <UltimasCompras mostrarPrecio={true} ultimosJuegos={data?.juegos || []} />
 
       {/* Paginador */}
-      <Paginador pagina={pagina} setPagina={setPagina} max={datos.meta.maxPage} />
+      <Paginador pagina={pagina} setPagina={setPagina} max={data?.meta?.maxPage || 1} />
     </ContenedorAuto>
   );
 };

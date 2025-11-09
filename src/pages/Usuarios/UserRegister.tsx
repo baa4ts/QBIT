@@ -1,48 +1,45 @@
-import { useState } from 'react'
-import { Lock, Mail, User } from 'lucide-react'
-import { useNavigate } from 'react-router'
-import axios from 'axios'
-import BotonDeEnvio from '../../components/Autenticacion/BotonDeEnvio'
-import AutenticacionTitulo from '../../components/Autenticacion/AutenticacionTitulo'
-import RedireccionAutenticacion from '../../components/Autenticacion/RedireccionAutenticacion'
-import { useUsuario, type UsuarioInter } from '../../store/usuarioStore'
+import { Lock, Mail, User } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { API } from '../../Actions/API';
+import AutenticacionTitulo from '../../components/Autenticacion/AutenticacionTitulo';
+import BotonDeEnvio from '../../components/Autenticacion/BotonDeEnvio';
+import RedireccionAutenticacion from '../../components/Autenticacion/RedireccionAutenticacion';
+import { useUsuario, type UsuarioInter } from '../../store/usuarioStore';
 
 const UserRegister = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errorServer, setErrorServer] = useState('')
-  const { guardarUsuario } = useUsuario()
-  const navigate = useNavigate()
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorServer, setErrorServer] = useState('');
+  const { guardarUsuario } = useUsuario();
+  const navigate = useNavigate();
 
   const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setErrorServer('')
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorServer('');
 
     try {
-      const response = await axios.post<UsuarioInter>(
-        'http://localhost:80/usuarios/register',
-        { nombre: username, email, password },
-        { headers: { 'Content-Type': 'application/json' } }
-      )
+      const response = await API.post<UsuarioInter>('/usuarios/register', {
+        nombre: username,
+        email,
+        password,
+      });
 
-      guardarUsuario(response.data)
-      navigate('/usuario')
+      guardarUsuario(response.data);
+      navigate('/usuario');
     } catch {
-      setErrorServer('Error en el registro')
+      setErrorServer('Error en el registro');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className='flex h-dvh w-full items-center justify-center bg-black'>
-      <form
-        className='flex w-full max-w-sm flex-col space-y-4 rounded-lg bg-white p-4 shadow-xl'
-        onSubmit={handleRegister}
-      >
+      <form className='flex w-full max-w-sm flex-col space-y-4 rounded-lg bg-white p-4 shadow-xl' onSubmit={handleRegister}>
         <AutenticacionTitulo titulo='Register' />
 
         {/* Username */}
@@ -98,29 +95,16 @@ const UserRegister = () => {
 
         {/* Boton */}
         <div className='pt-4'>
-          <BotonDeEnvio
-            canSubmit={!!username && !!email && !!password}
-            isSubmitting={isSubmitting}
-            texto='Registrar'
-            textoEnviando='Registrando...'
-          />
+          <BotonDeEnvio canSubmit={!!username && !!email && !!password} isSubmitting={isSubmitting} texto='Registrar' textoEnviando='Registrando...' />
         </div>
 
-        <RedireccionAutenticacion
-          enlace='/usuario/login'
-          mensaje_a='ya tienes cuenta'
-          mensaje_b='Login'
-        />
+        <RedireccionAutenticacion enlace='/usuario/login' mensaje_a='ya tienes cuenta' mensaje_b='Login' />
 
         {/* Error */}
-        {errorServer && (
-          <div className='mt-2 text-center text-red-500 text-sm font-medium'>
-            {errorServer}
-          </div>
-        )}
+        {errorServer && <div className='mt-2 text-center text-sm font-medium text-red-500'>{errorServer}</div>}
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default UserRegister
+export default UserRegister;

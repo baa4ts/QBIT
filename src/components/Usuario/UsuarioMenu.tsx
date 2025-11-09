@@ -4,7 +4,11 @@ import BottonPerfil from './BottonPerfil';
 const UsuarioMenu = () => {
   const { eliminarUsuario, usuario } = useUsuario();
 
-  const rutas = [{ label: 'Home', to: '/' }, { label: 'Mi Biblioteca', to: '/juegos/biblioteca' }, { label: 'Editar' }];
+  const rutas = [
+    { label: 'Home', to: '/' },
+    { label: 'Mi Biblioteca', to: '/juegos/biblioteca' },
+    { label: 'Editar', to: '/usuario/configuracion' },
+  ];
 
   if (usuario?.permiso === 2) {
     rutas.push({ label: 'Mis Creaciones', to: '/dev' });

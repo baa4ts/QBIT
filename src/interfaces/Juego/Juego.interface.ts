@@ -1,5 +1,5 @@
 export interface JuegoActorInterface {
-  id: number;
+  id: string;
   nombre: string;
 }
 

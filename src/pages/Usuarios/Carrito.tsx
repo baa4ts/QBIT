@@ -1,3 +1,4 @@
+import { comprarJuegos } from '../../Actions/Carrito.action';
 import ContenedorAuto from '../../components/Shared/ContenedorAuto';
 import Navbar from '../../components/Shared/Navbar';
 import CarritoVacio from '../../components/Usuario/CarritoVacio';
@@ -7,11 +8,13 @@ import UsuarioSeparador from '../../components/Usuario/UsuarioSeparador';
 import { useCarrito } from '../../store/carritoStore';
 
 const Carrito = () => {
-  const { juegos } = useCarrito();
+  const { juegos, limpiar } = useCarrito();
 
-  const handlePagar = () => {
-    const id = juegos.map(i => i.id);
-    console.log(id);
+  const handlePagar = async () => {
+    const ids = juegos.map(j => j.id);
+    const exito = await comprarJuegos(ids);
+    if (exito) limpiar();
+    console.log('Compra completada:', exito);
   };
 
   return (

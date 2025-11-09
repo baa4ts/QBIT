@@ -18,14 +18,18 @@ export interface UsuarioState {
 }
 
 /**
- * Store de usuario global
- * @note Contiene estado del usuario y acciones para actualizarlo
+ * Store de usuario global con persistencia en localStorage
  */
-export const useUsuario = create<UsuarioState>(set => ({
-  // Datos
-  usuario: null,
+export const useUsuario = create<UsuarioState>(set => {
+  return {
+    usuario: null,
 
-  // Acciones
-  guardarUsuario: usuario => set({ usuario }),
-  eliminarUsuario: () => set({ usuario: null }),
-}));
+    guardarUsuario: usuario => {
+      set({ usuario });
+    },
+
+    eliminarUsuario: () => {
+      set({ usuario: null });
+    },
+  };
+});

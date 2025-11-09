@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
+import { ObtenerBiblioteca } from '../../Actions/Biblioteca';
 import ContenedorAuto from '../../components/Shared/ContenedorAuto';
 import MenuJuego from '../../components/Shared/MenuJuego';
 import Navbar from '../../components/Shared/Navbar';
@@ -8,7 +9,6 @@ import SelectorCategorias from '../../components/Shared/SelectorCategorias';
 import BiblioteacaEstadisticas from '../../components/Usuario/BiblioteacaEstadisticas';
 import UltimasCompras from '../../components/Usuario/UltimasCompras';
 import UsuarioSeparador from '../../components/Usuario/UsuarioSeparador';
-import { datosJuegosPrueva } from '../../interfaces/Juegos/Juegos.interface';
 import { GenararUrl } from '../../Utils/GerarUrl';
 
 const Biblioteca = () => {
@@ -20,15 +20,19 @@ const Biblioteca = () => {
   const [pagina, setPagina] = useState<number>(0);
   const [categorias, setCategorias] = useState<string[]>([]);
   const [buscar, setBuscar] = useState<string>('');
+  const [datos, setDatos] = useState({ juegos: [], meta: { maxPage: 1 } });
+  const [cargando, setCargando] = useState(true);
 
   // Datos url
   const urlPage = Number(searchParams.get('page')) || 1;
   const urlCategoria = searchParams.getAll('categoria');
+  const urlBuscar = searchParams.get('buscar') || '';
 
-  // Establecer las categorias
+  // Establecer datos iniciales desde la url
   useEffect(() => {
     setPagina(urlPage);
     setCategorias(urlCategoria);
+    setBuscar(urlBuscar);
   }, []);
 
   // Actualizar la url
@@ -37,24 +41,40 @@ const Biblioteca = () => {
     navegar({ pathname: '/juegos/biblioteca', search }, { replace: true });
   }, [pagina, categorias, buscar]);
 
-  // Mismo tipado que el /juegos pero diferente endpoint
-  const datos = datosJuegosPrueva;
+  // Cargar los datos desde el backend
+  useEffect(() => {
+    const fetchDatos = async () => {
+      setCargando(true);
+      try {
+        const query = GenararUrl({ pagina, categorias, buscar });
+        const data = await ObtenerBiblioteca(query);
+        setDatos(data);
+      } catch (err) {
+        console.error('Error al obtener biblioteca:', err);
+      } finally {
+        setCargando(false);
+      }
+    };
+    fetchDatos();
+  }, [pagina, categorias, buscar]);
 
   return (
     <ContenedorAuto>
-      {/* Se reutiliza la mayoria de cosas*/}
       <Navbar />
       <UsuarioSeparador titulo='Tus juegos' />
 
-      {/* Menu */}
       <MenuJuego mostrarOfertas={false} buscar={buscar} setBuscar={setBuscar} />
-      {/* Menu de categorias */}
-      <SelectorCategorias todas={datos.categorias} categorias={categorias} setCategorias={setCategorias} />
-      {/* Separador con texto */}
-      <BiblioteacaEstadisticas titulo='Total de Juegos' numero={16} />
-      {/* Listado de juegos */}
-      <UltimasCompras mostrarPrecio={true} ultimosJuegos={datos.juegos} />
-      <Paginador pagina={pagina} setPagina={setPagina} max={datos.meta.maxPage} />
+      <SelectorCategorias categorias={categorias} setCategorias={setCategorias} />
+      <BiblioteacaEstadisticas titulo='Total de Juegos' numero={datos.juegos.length} />
+
+      {cargando ? (
+        <p className='p-4 text-center text-gray-400'>Cargando...</p>
+      ) : (
+        <>
+          <UltimasCompras mostrarPrecio={true} ultimosJuegos={datos.juegos} />
+          <Paginador pagina={pagina} setPagina={setPagina} max={datos.meta.maxPage} />
+        </>
+      )}
     </ContenedorAuto>
   );
 };

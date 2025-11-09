@@ -7,6 +7,8 @@ import SuspenseLoading from './components/Shared/SuspenseLoading';
 
 // index rapido
 import Home from './pages/Home';
+import Devs from './pages/Devs/Devs';
+import Configuracion from './pages/Usuarios/Configuracion';
 
 // lazy para todo lo demas
 const UserLogin = lazy(() => import('./pages/Usuarios/UserLogin'));
@@ -49,7 +51,14 @@ const AppRouter = () => {
                 </Suspense>
               } />
               {/* ------------------------------------- */}
+              <Route path='configuracion' element={
+                <Suspense fallback={<SuspenseLoading />}>
+                  <Configuracion />
+                </Suspense>
+              } />
+              {/* ------------------------------------- */}
             </Route>
+
 
             {/* Login y register: bloquea usuarios autenticados */}
             <Route element={<AntiUsuarios re_auth='/usuario' />}>
@@ -104,13 +113,13 @@ const AppRouter = () => {
             {/* ------------------------------------- */}
             <Route index element={
               <Suspense fallback={<SuspenseLoading />}>
-                <Publicar />
+                <Devs />
               </Suspense>
             } />
             {/* ------------------------------------- */}
             <Route path='new' element={
               <Suspense fallback={<SuspenseLoading />}>
-                <h1>Nuevo</h1>
+                <Publicar />
               </Suspense>
             } />
             {/* ------------------------------------- */}

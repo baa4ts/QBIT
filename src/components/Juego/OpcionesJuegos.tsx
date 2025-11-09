@@ -1,7 +1,9 @@
 import { Download, ShoppingCart, Trash2 } from 'lucide-react';
 import { memo } from 'react';
+import { useNavigate } from 'react-router';
 import type { JuegoInterface } from '../../interfaces/Juego/Juego.interface';
 import { useCarrito } from '../../store/carritoStore';
+import { useUsuario } from '../../store/usuarioStore';
 
 // ---------- Boton Carrito ----------
 interface BotonCarritoProps {
@@ -48,11 +50,19 @@ export interface OpcionesJuegosInterface {
 }
 
 const OpcionesJuegos = ({ juego }: OpcionesJuegosInterface) => {
+  const navigate = useNavigate();
   const agregar = useCarrito(state => state.agregar);
   const eliminar = useCarrito(state => state.eliminar);
   const enCarrito = useCarrito(state => state.existe(juego.id));
+  const { usuario } = useUsuario();
 
   const handleClick = () => {
+    if (!usuario) {
+      // Si no hay usuario, redirige al login
+      navigate('/usuario/login');
+      return;
+    }
+
     if (enCarrito) eliminar(juego.id);
     else agregar({ id: juego.id, imagen: juego.banner, precio: juego.precio, slug: juego.slug });
   };
