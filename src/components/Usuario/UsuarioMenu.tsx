@@ -1,5 +1,6 @@
 import { useUsuario } from '../../store/usuarioStore';
 import BottonPerfil from './BottonPerfil';
+import CompartirModal from './ModalCompartir';
 
 const UsuarioMenu = () => {
   const { eliminarUsuario, usuario } = useUsuario();
@@ -22,6 +23,9 @@ const UsuarioMenu = () => {
           {r.label}
         </BottonPerfil>
       ))}
+
+      <CompartirModal />
+
       <BottonPerfil onClick={eliminarUsuario} color='danger'>
         Cerrar sesion
       </BottonPerfil>

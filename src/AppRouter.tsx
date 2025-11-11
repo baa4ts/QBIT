@@ -19,6 +19,7 @@ const Biblioteca = lazy(() => import('./pages/Juegos/Biblioteca'));
 const Juegos = lazy(() => import('./pages/Juegos/Juegos'));
 const Juego = lazy(() => import('./pages/Juegos/Juego'));
 const Publicar = lazy(() => import('./pages/Devs/Publicar'));
+const Shared = lazy(() => import('./pages/Usuarios/Shared'));
 
 const AppRouter = () => {
   return (
@@ -77,6 +78,13 @@ const AppRouter = () => {
               {/* ------------------------------------- */}
             </Route>
 
+
+            {/* Rutas para ver perfiles de usuarios */}
+            <Route path=':uuid' element={
+              <Suspense fallback={<SuspenseLoading />} >
+                <Shared />
+              </Suspense>
+            } />
           </Route>
 
           {/* ╔══════════════════════════════╗ */}

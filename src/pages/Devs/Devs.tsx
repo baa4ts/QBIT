@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Edit, Plus, Trash2 } from 'lucide-react';
+import { ArrowBigLeft, DollarSign, Download, Edit, Gamepad2, Plus, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { API } from '../../Actions/API';
@@ -59,18 +59,43 @@ const Devs = () => {
 
   return (
     <div className='flex min-h-screen w-full flex-col gap-6 bg-gray-900 p-6 text-white'>
-      <div className='flex justify-end'>
-        <Link to='/dev/new' className='flex items-center gap-2 rounded bg-green-600 px-4 py-2 font-bold text-white hover:bg-green-500'>
+      <div className='flex justify-center gap-2'>
+        <Link to='/usuario' className='flex items-center gap-2 rounded bg-red-600 px-4 py-2 font-bold text-white hover:bg-red-600/70'>
+          <ArrowBigLeft size={18} />
+          Volver Atras
+        </Link>
+        <Link to='/dev/new' className='flex items-center gap-2 rounded bg-green-600 px-4 py-2 font-bold text-white hover:bg-green-600/70'>
           <Plus size={18} />
           Nuevo Juego
         </Link>
       </div>
 
-      <section className='rounded border border-gray-700 bg-gray-800 p-4 shadow'>
-        <h2 className='mb-2 text-xl font-bold'>Totales Globales</h2>
-        <p>Total de juegos: {totales.totalJuegos}</p>
-        <p>Total de descargas: {totales.totalDescargas}</p>
-        <p>Total recaudado: ${totales.totalRecaudado}</p>
+      {/* Totales Globales */}
+      <section className='rounded-2xl border border-gray-700 bg-gray-800/80 p-6 shadow-lg backdrop-blur-sm'>
+        <h2 className='mb-4 flex items-center gap-2 text-2xl font-bold text-white'>
+          <Gamepad2 className='text-blue-400' size={22} />
+          Totales Globales
+        </h2>
+
+        <div className='space-y-3 text-gray-200'>
+          <p className='flex items-center gap-2'>
+            <Gamepad2 size={18} className='text-indigo-400' />
+            <span>Total de juegos:</span>
+            <span className='font-semibold text-white'>{totales.totalJuegos}</span>
+          </p>
+
+          <p className='flex items-center gap-2'>
+            <Download size={18} className='text-green-400' />
+            <span>Total de descargas:</span>
+            <span className='font-semibold text-white'>{totales.totalDescargas}</span>
+          </p>
+
+          <p className='flex items-center gap-2'>
+            <DollarSign size={18} className='text-yellow-400' />
+            <span>Total recaudado:</span>
+            <span className='font-semibold text-white'>${totales.totalRecaudado}</span>
+          </p>
+        </div>
       </section>
 
       <div className='h-4' />
@@ -98,16 +123,19 @@ const Devs = () => {
                 <td className='border px-4'>${j.recaudado}</td>
 
                 {!movil && (
-                  <td className='flex items-center justify-center border px-4'>
-                    <div className='flex gap-3'>
-                      <Link to={`/dev/new?juego=${j.slug}`} title='Editar' className='flex h-10 w-10 items-center justify-center rounded border border-gray-600 hover:bg-gray-700'>
-                        <Edit size={16} />
+                  <td className='flex items-center justify-center border'>
+                    <div className='flex h-14 w-full items-center justify-center gap-3'>
+                      <Link
+                        to={`/dev/new?juego=${j.slug}`}
+                        title='Editar'
+                        className='flex h-10 w-10 items-center justify-center rounded border border-gray-600 bg-orange-400/50 hover:bg-orange-400/80'>
+                        <Edit size={16} color='white' />
                       </Link>
                       <button
                         onClick={() => handleBorrar(j.slug)}
                         title='Borrar'
                         disabled={borrando === j.slug}
-                        className={`flex h-10 w-10 items-center justify-center rounded border border-gray-600 hover:bg-gray-700 ${
+                        className={`flex h-10 w-10 items-center justify-center rounded border border-gray-600 bg-red-400/50 hover:bg-red-400/90 ${
                           borrando === j.slug ? 'cursor-not-allowed opacity-50' : ''
                         }`}>
                         <Trash2 size={16} />

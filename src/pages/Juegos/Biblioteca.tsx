@@ -12,37 +12,46 @@ import UsuarioSeparador from '../../components/Usuario/UsuarioSeparador';
 import { GenararUrl } from '../../Utils/GerarUrl';
 
 const Biblioteca = () => {
-  // Hooks
   const [searchParams] = useSearchParams();
   const navegar = useNavigate();
 
-  // Variables
-  const [pagina, setPagina] = useState<number>(0);
+  // Estados
+  const [pagina, setPagina] = useState<number>(1);
   const [categorias, setCategorias] = useState<string[]>([]);
   const [buscar, setBuscar] = useState<string>('');
   const [datos, setDatos] = useState({ juegos: [], meta: { maxPage: 1 } });
-  const [cargando, setCargando] = useState(true);
+  const [cargando, setCargando] = useState<boolean>(true);
+  const [inicializado, setInicializado] = useState(false);
 
-  // Datos url
-  const urlPage = Number(searchParams.get('page')) || 1;
-  const urlCategoria = searchParams.getAll('categoria');
-  const urlBuscar = searchParams.get('buscar') || '';
-
-  // Establecer datos iniciales desde la url
+  // Inicializar desde la URL
   useEffect(() => {
+    const urlPage = Number(searchParams.get('page')) || 1;
+    const urlCategoria = searchParams.getAll('categoria');
+    const urlBuscar = searchParams.get('buscar') || '';
+
     setPagina(urlPage);
     setCategorias(urlCategoria);
     setBuscar(urlBuscar);
-  }, []);
 
-  // Actualizar la url
+    setInicializado(true);
+  }, [searchParams]);
+
+  // Actualizar URL solo despues de inicializar
   useEffect(() => {
+    if (!inicializado) return;
     const search = GenararUrl({ pagina, categorias, buscar });
     navegar({ pathname: '/juegos/biblioteca', search }, { replace: true });
-  }, [pagina, categorias, buscar]);
+  }, [pagina, categorias, buscar, navegar, inicializado]);
 
-  // Cargar los datos desde el backend
+  // Si cambian filtros o busqueda, volver a pagina 1
   useEffect(() => {
+    if (!inicializado) return;
+    setPagina(1);
+  }, [categorias, buscar, inicializado]);
+
+  // Cargar datos desde el backend
+  useEffect(() => {
+    if (!inicializado) return;
     const fetchDatos = async () => {
       setCargando(true);
       try {
@@ -56,7 +65,7 @@ const Biblioteca = () => {
       }
     };
     fetchDatos();
-  }, [pagina, categorias, buscar]);
+  }, [pagina, categorias, buscar, inicializado]);
 
   return (
     <ContenedorAuto>
