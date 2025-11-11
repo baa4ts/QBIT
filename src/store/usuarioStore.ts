@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 // Tipos
 export interface UsuarioInter {
@@ -9,27 +10,23 @@ export interface UsuarioInter {
 }
 
 export interface UsuarioState {
-  // Datos
   usuario: UsuarioInter | null;
-
-  // Acciones
   guardarUsuario: (usuario: UsuarioInter) => void;
   eliminarUsuario: () => void;
 }
 
-/**
- * Store de usuario global con persistencia en localStorage
- */
-export const useUsuario = create<UsuarioState>(set => {
-  return {
-    usuario: null,
+export const useUsuario = create<UsuarioState>()(
+  persist(
+    set => ({
+      usuario: null,
 
-    guardarUsuario: usuario => {
-      set({ usuario });
-    },
+      guardarUsuario: usuario => set({ usuario }),
 
-    eliminarUsuario: () => {
-      set({ usuario: null });
+      eliminarUsuario: () => set({ usuario: null }),
+    }),
+    {
+      name: 'usuario',
+      storage: createJSONStorage(() => localStorage),
     },
-  };
-});
+  ),
+);
