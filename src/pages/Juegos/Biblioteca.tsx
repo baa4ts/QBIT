@@ -17,16 +17,14 @@ const Biblioteca = () => {
   const [searchParams] = useSearchParams();
   const navegar = useNavigate();
 
-  // Estados de filtros y paginacion
   const [pagina, setPagina] = useState<number>(1);
   const [categorias, setCategorias] = useState<string[]>([]);
   const [buscar, setBuscar] = useState<string>('');
   const [inicializado, setInicializado] = useState(false);
 
-  // Ref para comparar filtros previos
   const filtrosRef = useRef({ categorias: [] as string[], buscar: '' });
 
-  // Inicializar filtros desde la URL solo una vez
+  // Inicializar filtros desde URL
   useEffect(() => {
     const urlPage = Number(searchParams.get('page')) || 1;
     const urlCategoria = searchParams.getAll('categoria');
@@ -47,16 +45,19 @@ const Biblioteca = () => {
     navegar({ pathname: '/juegos/biblioteca', search }, { replace: true });
   }, [pagina, categorias, buscar, inicializado, navegar]);
 
-  // Resetear pagina a 1 si cambian filtros
+  // Resetear pagina si cambian filtros de usuario
   useEffect(() => {
     if (!inicializado) return;
-    if (filtrosRef.current.buscar !== buscar || filtrosRef.current.categorias.join(',') !== categorias.join(',')) {
+    const filtrosCambian =
+      filtrosRef.current.buscar !== buscar ||
+      filtrosRef.current.categorias.join(',') !== categorias.join(',');
+    if (filtrosCambian) {
       setPagina(1);
       filtrosRef.current = { categorias, buscar };
     }
   }, [categorias, buscar, inicializado]);
 
-  // Query con TanStack
+  // Query TanStack
   const { data, isLoading, isError } = useQuery({
     queryKey: ['biblioteca', pagina, categorias, buscar],
     queryFn: () => {

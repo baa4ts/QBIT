@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router';
 import { obtenerJuegos } from '../../Actions/Juegos.actions';
 import ContenedorAuto from '../../components/Shared/ContenedorAuto';
@@ -24,7 +24,7 @@ const Juegos = () => {
   const filtrosRef = useRef({ categorias: [] as string[], buscar: '' });
 
   // Inicializar filtros desde URL
-  useState(() => {
+  useEffect(() => {
     const urlOfertas = (searchParams.get('ofertas') || '').trim().toLowerCase() === 'true';
     const urlPage = Number(searchParams.get('page')) || 1;
     const urlCategoria = searchParams.getAll('categoria');
@@ -37,19 +37,30 @@ const Juegos = () => {
 
     filtrosRef.current = { categorias: urlCategoria, buscar: urlBuscar };
     setInicializado(true);
-  });
+  }, [searchParams]);
 
-  // Actualizar URL
-  const search = GenararUrl({ pagina, ofertas, categorias, buscar });
-  if (inicializado) {
+  // Actualizar URL cuando cambian filtros/pagina
+  useEffect(() => {
+    if (!inicializado) return;
+    const search = GenararUrl({ pagina, ofertas, categorias, buscar });
     navegar({ pathname: '/juegos', search }, { replace: true });
-  }
+  }, [pagina, ofertas, categorias, buscar, navegar, inicializado]);
 
-  // Resetear pagina si cambian filtros
-  if (inicializado && (filtrosRef.current.buscar !== buscar || filtrosRef.current.categorias.join(',') !== categorias.join(','))) {
-    setPagina(1);
-    filtrosRef.current = { categorias, buscar };
-  }
+  // Resetear pagina si cambian filtros de usuario
+  useEffect(() => {
+    if (!inicializado) return;
+
+    const filtrosCambian =
+      filtrosRef.current.buscar !== buscar ||
+      filtrosRef.current.categorias.join(',') !== categorias.join(',');
+
+    if (filtrosCambian) {
+      setPagina(1);
+      filtrosRef.current = { categorias, buscar };
+    }
+  }, [categorias, buscar, inicializado]);
+
+  const search = GenararUrl({ pagina, ofertas, categorias, buscar });
 
   // Query TanStack
   const { data, isLoading, isError } = useQuery({
@@ -64,12 +75,16 @@ const Juegos = () => {
   return (
     <ContenedorAuto>
       <Navbar />
-
-      <MenuJuego label='Ofertas' mostrarOfertas activo={ofertas} setActivo={setOfertas} buscar={buscar} setBuscar={setBuscar} />
-
+      <MenuJuego
+        label='Ofertas'
+        mostrarOfertas
+        activo={ofertas}
+        setActivo={setOfertas}
+        buscar={buscar}
+        setBuscar={setBuscar}
+      />
       <SelectorCategorias categorias={categorias} setCategorias={setCategorias} />
       <UltimasCompras mostrarPrecio={true} ultimosJuegos={data?.juegos || []} />
-
       <Paginador pagina={pagina} setPagina={setPagina} max={data?.meta?.maxPage || 1} />
     </ContenedorAuto>
   );
