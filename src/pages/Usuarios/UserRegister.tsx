@@ -29,7 +29,7 @@ const UserRegister = () => {
       });
 
       guardarUsuario(response.data);
-      navigate('/usuario');
+      navigate('/otp');
     } catch {
       setErrorServer('Error en el registro');
     } finally {

@@ -7,6 +7,7 @@ export interface UsuarioInter {
   permiso: number;
   icono: string;
   token: string;
+  valido: boolean;
 }
 
 export interface UsuarioState {

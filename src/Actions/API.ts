@@ -6,6 +6,7 @@ export const API = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 });
 
 // interceptor de request: agrega token si existe
@@ -27,6 +28,11 @@ API.interceptors.response.use(
         const { eliminarUsuario } = useUsuario.getState();
         eliminarUsuario();
         window.location.href = '/usuario/login';
+      }
+
+      // usuario no verificado
+      if (status === 419) {
+        window.location.href = '/usuario/verificacion';
       }
     }
     return Promise.reject(error);

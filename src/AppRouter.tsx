@@ -20,6 +20,7 @@ const Juegos = lazy(() => import('./pages/Juegos/Juegos'));
 const Juego = lazy(() => import('./pages/Juegos/Juego'));
 const Publicar = lazy(() => import('./pages/Devs/Publicar'));
 const Shared = lazy(() => import('./pages/Usuarios/Shared'));
+const Verificacion = lazy(() => import('./pages/Verificacion/Verificacion'));
 
 const AppRouter = () => {
   return (
@@ -58,11 +59,20 @@ const AppRouter = () => {
                 </Suspense>
               } />
               {/* ------------------------------------- */}
+
+              {/* ╔══════════════════════════════╗ */}
+              {/* ║     Verificacion de email    ║ */}
+              {/* ╚══════════════════════════════╝ */}
+              <Route path='verificar' element={
+                <Suspense fallback={<SuspenseLoading />}>
+                  <Verificacion />
+                </Suspense>
+              } />
             </Route>
 
 
             {/* Login y register: bloquea usuarios autenticados */}
-            <Route element={<AntiUsuarios re_auth='/usuario' />}>
+            <Route element={<AntiUsuarios re_auth='/juegos' />}>
               {/* ------------------------------------- */}
               <Route path='login' element={
                 <Suspense fallback={<SuspenseLoading />}>

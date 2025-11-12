@@ -24,7 +24,7 @@ const UserLogin = () => {
       const response = await API.post<UsuarioInter>('/usuarios/login', { email, password });
 
       guardarUsuario(response.data);
-      navigate('/usuario');
+      navigate('/usuario/otp');
     } catch {
       setErrorServer('Email o password incorrectos');
     } finally {
