@@ -34,6 +34,7 @@ const UserLoginForm = () => {
       const response = await API.post("/usuarios/login", info)
       if (response.status === 200) {
         guardarUsuario(response.data)
+        navigate('/usuario/otp');
       }
     } catch (error) {
       console.log("Error")

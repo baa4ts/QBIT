@@ -36,7 +36,7 @@ const UserRegisterForm = () => {
 
       if (response.status === 200) {
         guardarUsuario(response.data);
-        navigate('/usuario/otp'); // redirigir después de registro
+        navigate('/usuario/otp');
       }
     } catch (error) {
       console.log("Error en registro");
@@ -47,6 +47,7 @@ const UserRegisterForm = () => {
 
   const handleCancel = () => {
     setInfo({ username: null, email: null, password: null });
+    setIsSubmitting(false);
   };
 
   return (
