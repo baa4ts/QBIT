@@ -5,6 +5,7 @@ import BotonDeEnvio from '../../components/Autenticacion/BotonDeEnvio';
 import { API } from '../../Actions/API';
 import { useUsuario } from '../../store/usuarioStore';
 import RedireccionAutenticacion from '../../components/Autenticacion/RedireccionAutenticacion';
+import { useNavigate } from 'react-router';
 
 
 
@@ -19,6 +20,7 @@ const UserLoginForm = () => {
   const [info, setInfo] = useState<LoginInfo>({ email: null, password: null });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { guardarUsuario } = useUsuario()
+  const navigate = useNavigate();
 
   const handleChange = (field: 'email' | 'password', value: string) => {
     setInfo(prev => ({ ...prev, [field]: value }));
@@ -42,6 +44,7 @@ const UserLoginForm = () => {
 
   const handleCancel = () => {
     setInfo({ email: null, password: null });
+    navigate("/");
   };
 
   return (
