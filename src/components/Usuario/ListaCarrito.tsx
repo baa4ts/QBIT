@@ -16,7 +16,7 @@ const ListaCarrito = ({ juegos }: ListaCarritoProps) => {
           {/* Link al juego */}
           <Link to={`/juegos/${juego.slug}`} className='flex flex-1 items-center gap-4'>
             <img src={juego.imagen} alt={juego.slug} className='h-16 w-16 rounded-md object-cover md:h-20 md:w-20' />
-            <span className='truncate text-lg font-bold md:text-2xl'>{juego.slug}</span>
+            <span className='truncate text-lg font-bold md:text-2xl'>{juego.titulo}</span>
           </Link>
 
           {/* Precio */}

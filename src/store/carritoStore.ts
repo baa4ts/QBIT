@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 export interface JuegoCarrito {
   id: number;
+  titulo: string;
   imagen: string;
   precio: number;
   slug: string;
