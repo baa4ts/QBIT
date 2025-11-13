@@ -15,16 +15,27 @@ export interface RegisterInfo {
 
 const UserRegisterForm = () => {
   const [info, setInfo] = useState<RegisterInfo>({ username: null, email: null, password: null });
+  const [emailError, setEmailError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { guardarUsuario } = useUsuario();
   const navigate = useNavigate();
 
   const handleChange = (field: 'username' | 'email' | 'password', value: string) => {
     setInfo(prev => ({ ...prev, [field]: value }));
+
+    if (field === 'email') {
+      const regex = /^[^\s@]+@(gmail\.com|hotmail\.com|protonmail\.com)$/i;
+      if (!regex.test(value)) {
+        setEmailError('Solo se permiten Gmail, Hotmail o ProtonMail');
+      } else {
+        setEmailError('');
+      }
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (emailError) return;
     setIsSubmitting(true);
 
     try {
@@ -47,6 +58,7 @@ const UserRegisterForm = () => {
 
   const handleCancel = () => {
     setInfo({ username: null, email: null, password: null });
+    setEmailError('');
     setIsSubmitting(false);
   };
 
@@ -67,6 +79,7 @@ const UserRegisterForm = () => {
               onChange={e => handleChange('username', e.target.value)}
               className="font-po w-full border-none bg-transparent outline-none"
               disabled={isSubmitting}
+              minLength={6}
               required
             />
           </section>
@@ -78,15 +91,17 @@ const UserRegisterForm = () => {
           <section className="flex items-center rounded-md border-2 border-gray-400 p-2">
             <Mail className="mr-2 h-5 w-5 text-gray-500" />
             <input
-              type="email"
+              type="text"
               placeholder="tu@email.com"
               value={info.email || ''}
               onChange={e => handleChange('email', e.target.value)}
               className="font-po w-full border-none bg-transparent outline-none"
               disabled={isSubmitting}
+              minLength={9}
               required
             />
           </section>
+          {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
         </div>
 
         {/* Password */}
@@ -101,6 +116,7 @@ const UserRegisterForm = () => {
               onChange={e => handleChange('password', e.target.value)}
               className="font-po w-full border-none bg-transparent outline-none"
               disabled={isSubmitting}
+              minLength={6}
               required
             />
           </section>
@@ -109,7 +125,7 @@ const UserRegisterForm = () => {
         {/* Botones */}
         <div className="flex space-x-2 pt-4">
           <BotonDeEnvio
-            canSubmit={!!info.username && !!info.email && !!info.password}
+            canSubmit={!!info.username && !!info.email && !!info.password && !emailError}
             isSubmitting={isSubmitting}
             texto="Registrar"
           />

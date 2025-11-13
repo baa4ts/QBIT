@@ -7,23 +7,29 @@ import { useUsuario } from '../../store/usuarioStore';
 import RedireccionAutenticacion from '../../components/Autenticacion/RedireccionAutenticacion';
 import { useNavigate } from 'react-router';
 
-
-
 export interface LoginInfo {
   email: string | null;
   password: string | null;
 }
 
-
 const UserLoginForm = () => {
-
   const [info, setInfo] = useState<LoginInfo>({ email: null, password: null });
+  const [emailError, setEmailError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { guardarUsuario } = useUsuario()
+  const { guardarUsuario } = useUsuario();
   const navigate = useNavigate();
 
   const handleChange = (field: 'email' | 'password', value: string) => {
     setInfo(prev => ({ ...prev, [field]: value }));
+
+    if (field === 'email') {
+      const regex = /^[^\s@]+@(gmail\.com|hotmail\.com|protonmail\.com)$/i;
+      if (!regex.test(value)) {
+        setEmailError('Solo se permiten Gmail, Hotmail o ProtonMail');
+      } else {
+        setEmailError('');
+      }
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,13 +37,13 @@ const UserLoginForm = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await API.post("/usuarios/login", info)
+      const response = await API.post("/usuarios/login", info);
       if (response.status === 200) {
-        guardarUsuario(response.data)
+        guardarUsuario(response.data);
         navigate('/usuario/otp');
       }
     } catch (error) {
-      console.log("Error")
+      console.log("Error");
     }
 
     setIsSubmitting(false);
@@ -62,15 +68,17 @@ const UserLoginForm = () => {
           <section className="flex items-center rounded-md border-2 border-gray-400 p-2">
             <Mail className="mr-2 h-5 w-5 text-gray-500" />
             <input
-              type="email"
+              type="text"
               placeholder="tu@email.com"
               value={info.email || ''}
               onChange={e => handleChange('email', e.target.value)}
               className="font-po w-full border-none bg-transparent outline-none"
+              minLength={9}
               disabled={isSubmitting}
               required
             />
           </section>
+          {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
         </div>
 
         {/* Password */}
@@ -84,6 +92,7 @@ const UserLoginForm = () => {
               value={info.password || ''}
               onChange={e => handleChange('password', e.target.value)}
               className="font-po w-full border-none bg-transparent outline-none"
+              minLength={6}
               disabled={isSubmitting}
               required
             />
@@ -93,7 +102,7 @@ const UserLoginForm = () => {
         {/* Botones */}
         <div className="flex space-x-2 pt-4">
           <BotonDeEnvio
-            canSubmit={!!info.email && !!info.password}
+            canSubmit={!!info.email && !!info.password && !emailError}
             isSubmitting={isSubmitting}
             texto="Enviar"
           />
@@ -105,7 +114,12 @@ const UserLoginForm = () => {
             Cancelar
           </button>
         </div>
-        <RedireccionAutenticacion enlace="/usuario/register" mensaje_a="No tienes cuenta" mensaje_b="Register" />
+
+        <RedireccionAutenticacion
+          enlace="/usuario/register"
+          mensaje_a="No tienes cuenta"
+          mensaje_b="Register"
+        />
       </form>
     </div>
   );
