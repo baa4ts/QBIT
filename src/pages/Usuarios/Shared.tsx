@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Navigate, useParams } from 'react-router';
-import { obtenerPerfil } from '../../Actions/Perfil.action';
+import { obtenerPerfilCompartido } from '../../Actions/Perfil.action';
 import ContenedorAuto from '../../components/Shared/ContenedorAuto';
 import Navbar from '../../components/Shared/Navbar';
 import SuspenseLoading from '../../components/Shared/SuspenseLoading';
@@ -15,7 +15,7 @@ const Perfil = () => {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['Perfil', uuid],
-    queryFn: () => obtenerPerfil(uuid),
+    queryFn: () => obtenerPerfilCompartido(uuid),
   });
 
   if (isLoading) return <SuspenseLoading />;

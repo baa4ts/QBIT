@@ -9,9 +9,9 @@ import SuspenseLoading from './components/Shared/SuspenseLoading';
 import Home from './pages/Home';
 import Devs from './pages/Devs/Devs';
 import Configuracion from './pages/Usuarios/Configuracion';
+import UserLogin from './pages/Usuarios/UserLogin';
 
 // lazy para todo lo demas
-const UserLogin = lazy(() => import('./pages/Usuarios/UserLogin'));
 const UserRegister = lazy(() => import('./pages/Usuarios/UserRegister'));
 const Perfil = lazy(() => import('./pages/Usuarios/Perfil'));
 const Carrito = lazy(() => import('./pages/Usuarios/Carrito'));
@@ -63,6 +63,7 @@ const AppRouter = () => {
               {/* ╔══════════════════════════════╗ */}
               {/* ║     Verificacion de email    ║ */}
               {/* ╚══════════════════════════════╝ */}
+
               <Route path='verificar' element={
                 <Suspense fallback={<SuspenseLoading />}>
                   <Verificacion />
@@ -70,15 +71,14 @@ const AppRouter = () => {
               } />
             </Route>
 
-
             {/* Login y register: bloquea usuarios autenticados */}
-            <Route element={<AntiUsuarios re_auth='/juegos' />}>
+            <Route element={<AntiUsuarios re_auth='/juegos/biblioteca' />}>
               {/* ------------------------------------- */}
-              <Route path='login' element={
-                <Suspense fallback={<SuspenseLoading />}>
+              <Route path='login'>
+                <Route index element={
                   <UserLogin />
-                </Suspense>
-              } />
+                } />
+              </Route>
               {/* ------------------------------------- */}
               <Route path='register' element={
                 <Suspense fallback={<SuspenseLoading />}>
@@ -87,14 +87,6 @@ const AppRouter = () => {
               } />
               {/* ------------------------------------- */}
             </Route>
-
-
-            {/* Rutas para ver perfiles de usuarios */}
-            <Route path=':uuid' element={
-              <Suspense fallback={<SuspenseLoading />} >
-                <Shared />
-              </Suspense>
-            } />
           </Route>
 
           {/* ╔══════════════════════════════╗ */}
@@ -141,6 +133,18 @@ const AppRouter = () => {
               </Suspense>
             } />
             {/* ------------------------------------- */}
+          </Route>
+
+
+          {/* ╔══════════════════════════════╗ */}
+          {/* ║     Usuarios compartido      ║ */}
+          {/* ╚══════════════════════════════╝ */}
+          <Route path='/compartido'>
+            <Route path=':uuid' element={
+              <Suspense fallback={<SuspenseLoading />} >
+                <Shared />
+              </Suspense>
+            } />
           </Route>
 
           {/* ╔══════════════════════════════╗ */}

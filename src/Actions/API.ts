@@ -32,7 +32,7 @@ API.interceptors.response.use(
 
       // usuario no verificado
       if (status === 419) {
-        window.location.href = '/usuario/verificacion';
+        window.location.href = '/usuario/verificar';
       }
     }
     return Promise.reject(error);

@@ -14,7 +14,7 @@ const CompartirModal = () => {
 
   if (!id) return <Navigate to={'/'} />;
 
-  const url = `${window.location.origin}/usuario/${id}`;
+  const url = `${window.location.origin}/compartido/${id}`;
 
   return (
     <>

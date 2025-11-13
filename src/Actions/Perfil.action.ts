@@ -5,3 +5,8 @@ export const obtenerPerfil = async (id: string): Promise<UsuarioInterface> => {
   const response = await API.get<UsuarioInterface>(`/usuarios/${id}`);
   return response.data;
 };
+
+export const obtenerPerfilCompartido = async (id: string): Promise<UsuarioInterface> => {
+  const response = await API.get<UsuarioInterface>(`usuarios/compartir/${id}`);
+  return response.data;
+};
