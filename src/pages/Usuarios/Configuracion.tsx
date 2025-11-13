@@ -59,7 +59,7 @@ const Configuracion = () => {
   return (
     <ContenedorAuto>
       <div className='mx-auto flex max-w-md flex-col gap-4'>
-        <h1 className='text-xl font-bold text-white'>Configuración de usuario</h1>
+        <h1 className='text-xl font-bold text-white'>Configuracion de usuario</h1>
 
         <div className='flex flex-col gap-2'>
           <label className='font-semibold text-white'>Nombre</label>
@@ -72,7 +72,7 @@ const Configuracion = () => {
         </div>
 
         <div className='flex flex-col gap-2'>
-          <label className='font-semibold text-white'>Biografía</label>
+          <label className='font-semibold text-white'>Biografia</label>
           <textarea
             value={usuario.biografia}
             onChange={e => handleChange('biografia', e.target.value)}
@@ -89,7 +89,7 @@ const Configuracion = () => {
             onChange={e => handleChange('icono', e.target.value)}
             className='w-full rounded-md border border-gray-600 bg-[#161616] px-3 py-1 text-white focus:border-emerald-500 focus:outline-none'
           />
-          {usuario.icono && <img src={usuario.icono} alt='Previsualización' className='mt-2 h-24 w-24 rounded-md object-cover' />}
+          {usuario.icono && <img src={usuario.icono} alt='Previsualizacion' className='mt-2 h-24 w-24 rounded-md object-cover' />}
         </div>
 
         <div className='mt-4 flex w-full gap-4'>

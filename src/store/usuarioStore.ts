@@ -1,7 +1,7 @@
+// store
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-// Tipos
 export interface UsuarioInter {
   id: string;
   permiso: number;
@@ -14,6 +14,7 @@ export interface UsuarioState {
   usuario: UsuarioInter | null;
   guardarUsuario: (usuario: UsuarioInter) => void;
   eliminarUsuario: () => void;
+  setUsuarioToken: (token: string) => void;
 }
 
 export const useUsuario = create<UsuarioState>()(
@@ -24,6 +25,11 @@ export const useUsuario = create<UsuarioState>()(
       guardarUsuario: usuario => set({ usuario }),
 
       eliminarUsuario: () => set({ usuario: null }),
+
+      setUsuarioToken: token =>
+        set(state => ({
+          usuario: state.usuario ? { ...state.usuario, token } : null,
+        })),
     }),
     {
       name: 'usuario',

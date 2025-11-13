@@ -83,7 +83,7 @@ const UserLoginForm = () => {
 
         {/* Password */}
         <div className="flex flex-col space-y-2">
-          <label className="font-po text-sm font-medium text-gray-700">Contraseña</label>
+          <label className="font-po text-sm font-medium text-gray-700">Contrasena</label>
           <section className="flex items-center rounded-md border-2 border-gray-400 p-2">
             <Lock className="mr-2 h-5 w-5 text-gray-500" />
             <input

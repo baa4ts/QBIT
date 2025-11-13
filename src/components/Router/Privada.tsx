@@ -15,7 +15,7 @@ export interface PrivadaProps {
  * @note Obligatorio estar autenticado para acceder.
  *       Redirige si el usuario no cumple los permisos necesarios.
  *
- * @param permiso number → nivel de permiso mínimo requerido (el usuario con permiso >= será redirigido)
+ * @param permiso number → nivel de permiso minimo requerido (el usuario con permiso >= sera redirigido)
  * @param re_perm string → ruta para redireccionar si el usuario tiene permiso mayor o igual al requerido (opcional, default = '/usuario')
  * @param re_desa string → ruta para redireccionar si no hay usuario autenticado (opcional, default = '/usuario/login')
  */

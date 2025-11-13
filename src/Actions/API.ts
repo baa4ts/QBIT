@@ -15,22 +15,28 @@ API.interceptors.request.use(config => {
   if (usuario?.token && config.headers) {
     config.headers['Authorization'] = `Bearer ${usuario.token}`;
   }
+
   return config;
 });
 
-// interceptor: si llega una respuesta de que no esta autenticado o con rol cerrar session
+// interceptor de response: actualizar JWT si viene renovado + log de headers
 API.interceptors.response.use(
-  response => response,
+  response => {
+    const nuevoToken = response.headers['x-renewed-jwt'];
+    if (nuevoToken) {
+      useUsuario.getState().setUsuarioToken(nuevoToken);
+    }
+
+    return response;
+  },
   error => {
     if (error.response) {
       const status = error.response.status;
       if ([401, 402, 403, 404].includes(status)) {
-        const { eliminarUsuario } = useUsuario.getState();
-        eliminarUsuario();
+        useUsuario.getState().eliminarUsuario();
         window.location.href = '/usuario/login';
       }
 
-      // usuario no verificado
       if (status === 419) {
         window.location.href = '/usuario/verificar';
       }

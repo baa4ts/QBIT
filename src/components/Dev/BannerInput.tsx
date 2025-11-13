@@ -13,7 +13,7 @@ const BannerInput = ({ banner, setBanner }: BannerInputProps) => {
     setBanner(value);
 
     if (value && !/\.(jpg|jpeg|png|gif|webp)$/i.test(value)) {
-      setError('El link debe ser una imagen válida (jpg, png, gif, webp)');
+      setError('El link debe ser una imagen valida (jpg, png, gif, webp)');
     } else {
       setError('');
     }

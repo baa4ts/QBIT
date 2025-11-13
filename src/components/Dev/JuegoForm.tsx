@@ -18,9 +18,9 @@ const JuegoForm = ({ juegoData, setJuegoData }: JuegoFormProps) => {
 
   return (
     <div className='flex w-full flex-col gap-4 p-4'>
-      {/* Título */}
+      {/* Titulo */}
       <div className='flex flex-col gap-1'>
-        <label className='font-bold text-white'>Título</label>
+        <label className='font-bold text-white'>Titulo</label>
         <input
           type='text'
           value={juegoData.titulo}
@@ -54,15 +54,15 @@ const JuegoForm = ({ juegoData, setJuegoData }: JuegoFormProps) => {
         />
       </div>
 
-      {/* Descripción */}
+      {/* Descripcion */}
       <div className='flex flex-col gap-1'>
-        <label className='font-bold text-white'>Descripción</label>
+        <label className='font-bold text-white'>Descripcion</label>
         <textarea
           value={juegoData.descripcion}
           onChange={e => handleChange('descripcion', e.target.value)}
           className='resize-none rounded bg-gray-700 px-3 py-2 text-white focus:ring-2 focus:ring-green-500 focus:outline-none'
           rows={4}
-          placeholder='Descripción del juego'
+          placeholder='Descripcion del juego'
         />
       </div>
     </div>

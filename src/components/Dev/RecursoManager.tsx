@@ -36,7 +36,7 @@ const RecursoManager = ({ recursos, setRecursos }: RecursoManagerProps) => {
     if (!link.trim() || !tipo) return;
 
     if (!validarLink(link.trim(), tipo)) {
-      setError(tipo === 'imagen' ? 'El link debe ser una imagen válida (jpg, png, gif, webp)' : 'El link debe ser un video válido (mp4, webm, ogg)');
+      setError(tipo === 'imagen' ? 'El link debe ser una imagen valida (jpg, png, gif, webp)' : 'El link debe ser un video valido (mp4, webm, ogg)');
       return;
     }
 

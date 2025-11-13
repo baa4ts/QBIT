@@ -36,7 +36,7 @@ export interface EstadisticasDevResponse {
   juegos: JuegoDev[];
 }
 
-// Acción
+// Accion
 export const obtenerEstadisticasDev = async (): Promise<EstadisticasDevResponse> => {
   const response = await API.get<EstadisticasDevResponse>('/dev');
   return response.data;

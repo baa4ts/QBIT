@@ -19,7 +19,7 @@ export const testUsuario: UsuarioInterface = {
   id: 'adsad',
   icono: 'https://i.pinimg.com/736x/cd/35/56/cd3556de028e954d49503939ca861cfc.jpg',
   nombre: 'Hideo Kojima',
-  biografia: 'Tokio, Japón (Creador de MGS y DS)',
+  biografia: 'Tokio, Japon (Creador de MGS y DS)',
   ultimos: [
     {
       titulo: 'Hades II',
